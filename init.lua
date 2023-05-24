@@ -1,6 +1,11 @@
--- open markman
-local cmd = vim.api.nvim_create_user_command
+local M = {}
 
-cmd("MarkmapOpen", function()
-	os.execute("markmap " .. "markmap " .. vim.fn.expand("%:p"))
-end, { desc = "Show a mental map of the current markdown file" })
+-- TODO: do this stuff
+-- antother thing
+-- TODO: another TODO
+
+M.todo = function()
+  print("ALL OK")
+end
+
+return M
