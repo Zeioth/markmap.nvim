@@ -47,3 +47,11 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
+
+## TODOS
+Expose options for
+
+* --output → In case the user wanna keep the generated html files for some reason. In reality it would be nicer to have :MarkmapSave for this.
+* --watch → We could have the command :MarkmapWatch to open and watch for changes in real time.
+* --no-toolbar → Boolead option to display or not the zoom buttons.
+
