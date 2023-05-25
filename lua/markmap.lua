@@ -13,9 +13,11 @@ M.setup = function(ctx)
     html_output = "/tmp/markmap.html" -- by defaullt create the html file here
   end
 
-  if hide_toolbar == nil then hide_toolbar = "" end
-
-  if hide_toolbar == true then hide_toolbar = " --no-toolbar" end
+  if hide_toolbar == true then
+    hide_toolbar = " --no-toolbar"
+  else
+    hide_toolbar = ""
+  end
 
   -- Setup autocmds
   cmd(
@@ -54,6 +56,7 @@ cmd("MarkmapWatch", function()
       .. html_output
       .. hide_toolbar
       .. " --watch"
+  print ""
   handle = uv.spawn(run_command, {
     stdio = { nil, nil, nil },
     detached = true,
