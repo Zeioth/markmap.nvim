@@ -65,27 +65,27 @@ cmd("MarkmapWatchStop", function()
 end, { desc = "Manually stops markmap watch" })
 
 -- Autocmds --------------------------------------------------------------
--- Kill jobs after a grace period
--- last_execution = vim.loop.now() -- timer for grace period
--- autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
--- autocmd("CursorHold", {
---   desc = "Kill all jobs after a grace period",
---   group = autocmd_group,
---   callback = function()
---     if current_time - last_execution >= grace_period then -- if grace period exceeded
---       if job ~= nil then job.kill() end                   -- kill jobs
---       last_execution = current_time                       -- update time
---     end
---   end,
--- })
---
--- -- Before vim exits, we want to stop all jobs
--- autocmd("VimLeavePre", {
---   desc = "Kill all jobs before closing vim to they don't keep running wild",
---   group = autocmd_group,
---   callback = function()
---     if job ~= nil then job.kill() end -- kill jobs
---   end,
--- })
+Kill jobs after a grace period
+last_execution = vim.loop.now() -- timer for grace period
+autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
+autocmd("CursorHold", {
+  desc = "Kill all jobs after a grace period",
+  group = autocmd_group,
+  callback = function()
+    if current_time - last_execution >= grace_period then -- if grace period exceeded
+      if job ~= nil then job.kill() end                   -- kill jobs
+      last_execution = current_time                       -- update time
+    end
+  end,
+})
+
+-- Before vim exits, we want to stop all jobs
+autocmd("VimLeavePre", {
+  desc = "Kill all jobs before closing vim to they don't keep running wild",
+  group = autocmd_group,
+  callback = function()
+    if job ~= nil then job.kill() end -- kill jobs
+  end,
+})
 
 return M
