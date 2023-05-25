@@ -12,11 +12,11 @@ M.setup = function(ctx)
   if html_output == nil then
     html_output = " -o /tmp/markmap.html " -- by defaullt create the html file here
   else
-    html_output = " -o " .. html_output
+    html_output = "-o " .. html_output
   end
 
   if hide_toolbar == true then
-    hide_toolbar = " --no-toolbar "
+    hide_toolbar = "--no-toolbar"
   else
     hide_toolbar = ""
   end
@@ -50,6 +50,8 @@ cmd("MarkmapWatch", function()
       :new({
         command = watch_cmd,
         args = {
+          html_output,
+          hide_toolbar,
           "--watch",
           vim.fn.expand "%:p",
         },
