@@ -21,9 +21,6 @@ M.setup = function(ctx)
     hide_toolbar = ""
   end
 
-  -- Setup variables
-  local current_buffer_path = vim.fn.expand "%:p"
-
   -- Setup autocmds
   cmd(
     "MarkmapOpen",
@@ -52,7 +49,12 @@ cmd("MarkmapWatch", function()
   job
       :new({
         command = watch_cmd,
-        args = { vim.fn.expand "%:p" },
+        args = {
+          html_output,
+          hide_toolbar,
+          " --watch ",
+          vim.fn.expand "%:p",
+        },
         on_exit = function(j, exit_code)
           local res = table.concat(j:result(), "\n")
           local type = "Success!"
