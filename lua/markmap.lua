@@ -42,14 +42,14 @@ M.setup = function(ctx)
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job then job.kill() end
+    if job ~= nil then job.kill() end
     job = uv.spawn(comando, { detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     table.insert(arguments, "--no-open")         -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job then job.kill() end
+    if job ~= nil then job.kill() end            -- kill jobs
     job = uv.spawn(comando, { detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 end
@@ -57,12 +57,12 @@ end
 cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch")           -- spetific to this command
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-  if job then job.kill() end
+  if job ~= nil then job.kill() end
   job = uv.spawn(comando, { detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 cmd("MarkmapWatchStop", function()
-  if job then job.kill() end
+  if job ~= nil then job.kill() end -- kill jobs
 end, { desc = "Manually stops markmap watch" })
 
 ---- Autocmds --------------------------------------------------------------
@@ -74,7 +74,7 @@ autocmd("CursorHold", {
   group = autocmd_group,
   callback = function()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
-      if job then job.kill() end                          -- kill jobs
+      if job ~= nil then job.kill() end                   -- kill jobs
       last_execution = current_time                       -- update time
     end
   end,
@@ -85,7 +85,7 @@ autocmd("VimLeavePre", {
   desc = "Kill all jobs before closing vim to they don't keep running wild",
   group = autocmd_group,
   callback = function()
-    if job then job.kill() end -- kill jobs
+    if job ~= nil then job.kill() end -- kill jobs
   end,
 })
 
