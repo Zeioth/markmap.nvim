@@ -1,9 +1,9 @@
 # Markmap.nvim
 Visualize your Markdown as mindmaps with markmap
 
-## How to install using ([lazy.nvim](https://github.com/folke/lazy.nvim))
+## How to install using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
-```
+```lua
   --  [markdown markmap]
   --  https://github.com/markmap/markmap
   --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
