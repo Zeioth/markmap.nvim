@@ -32,7 +32,7 @@ yarn global add markmap-cli
 ```    
 markmap
 ```
-If you the terminal cannot find the executable, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
+If the executable is not found, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
 
 ``` Example
 # PATH
