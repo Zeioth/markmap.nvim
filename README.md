@@ -1,4 +1,4 @@
-# Markmap.nvim
+# Markmap.nvim (WIP, don't install yet)
 Visualize your Markdown as mindmaps with markmap
 
 ![screenshot_2023-05-25_02-51-13_907564300](https://github.com/Zeioth/markmap.nvim/assets/3357792/e05a5050-622c-47b9-bc96-6e9ffd266b10)
@@ -18,23 +18,23 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
 {
   "Zeioth/markmap.nvim",
   build = "yarn global add markmap-cli",
-   cmd = {"MarkmapOpen"},
-  config = function()
-    require("markmap").setup({
-      -- Empty string means the same path as the current file, but with html extension.
-      html_output = "/tmp/markmap.html" 
-      hide_toolbar = "false
-    })
-  end
+  cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch"},
+  opts = {
+    html_output = "/tmp/markmap.html", -- Note: Using an empty string here will path as the current markdown file, but with .html extension.
+    hide_toolbar = "false",
+  },
+  config = function(_, opts) require("markmap").setup(opts) end
 },
 ```
 
 ## How to use
-We expose the next commands:
+Markmap.nvim provide the next commands:
 
-* :MarkmapOpen → Open the markmap
-* :MarkmapSave → Save without opening
-* :MarkmapWatch → Open the markmap and watch for changes
+|  Command            | Description                             |
+|---------------------|-----------------------------------------|
+| **:MarkmapOpen**    | Open the markmap                        |
+| **:MarkmapSave**    | Save without opening                    |
+| **:MarkmapWatch**   | Open the markmap and watch for changes  |
 
 ## Troubleshooting
 
@@ -61,11 +61,3 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
-
-## TODOS
-Expose options for
-
-* --output → In case the user wanna keep the generated html files for some reason. In reality it would be nicer to have :MarkmapSave for this.
-* --watch → We could have the command :MarkmapWatch to open and watch for changes in real time.
-* --no-toolbar → Boolead option to display or not the zoom buttons.
-
