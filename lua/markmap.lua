@@ -52,7 +52,7 @@ cmd("MarkmapWatch", function()
   job
       :new({
         command = watch_cmd,
-        args = { current_buffer_path },
+        args = { vim.fn.expand "%:p" },
         on_exit = function(j, exit_code)
           local res = table.concat(j:result(), "\n")
           local type = "Success!"
