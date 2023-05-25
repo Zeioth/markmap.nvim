@@ -44,11 +44,7 @@ M.setup = function(ctx)
 end
 
 cmd("MarkmapWatch", function()
-  local watch_cmd = "markmap "
-      .. html_output
-      .. hide_toolbar
-      .. " --watch "
-      .. vim.fn.expand "%:p"
+  local watch_cmd = "ls"
   handle = uv.spawn(watch_cmd, {
     stdio = { nil, nil, nil },
     detached = true,
