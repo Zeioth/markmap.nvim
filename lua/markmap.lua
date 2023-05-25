@@ -49,8 +49,6 @@ cmd("MarkmapWatch", function()
 
   -- Set arguments
   local arguments = {}
-  table.insert(arguments, html_output)
-  if hide_toolbar then table.insert(arguments, hide_toolbar) end
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
