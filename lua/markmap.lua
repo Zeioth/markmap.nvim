@@ -45,7 +45,7 @@ end
 
 cmd("MarkmapWatch", function()
   local watch_cmd = "markmap ~/activities/2023-backlog.md"
-  local handle = uv.spawn(comando, {
+  local handle = uv.spawn(watch_cmd, {
     stdio = { nil, nil, nil }, -- Discard stdout and stderr
     detached = true,
   }, function(exit_code, signal)
