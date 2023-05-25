@@ -4,7 +4,7 @@ Visualize your Markdown as mindmaps with markmap
 ![screenshot_2023-05-25_02-51-13_907564300](https://github.com/Zeioth/markmap.nvim/assets/3357792/e05a5050-622c-47b9-bc96-6e9ffd266b10)
 
 ## Motivation
-This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markmap), which I missed when moving to Neovim.
+This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markmap), which I missed when moving to Neovim. If you wanna know more about mindmap check [their website](https://markmap.js.org/) and [their repo](https://github.com/markmap/markmap/tree/master/packages/markmap-cli).
 
 ## Requirements
 
