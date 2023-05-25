@@ -45,10 +45,17 @@ end
 
 cmd("MarkmapWatch", function()
   local watch_cmd = "markmap ~/activities/2023-backlog.md"
-  handle = uv.spawn(watch_cmd, {
-    stdio = { nil, uv.pipe(), uv.pipe() },
+  local handle = uv.spawn(watch_cmd, {
+    stdio = { nil, uv.pipe(), uv.pipe() }, -- Redirige stdout y stderr a tuberías (pipes)
     detached = true,
-  }, function(_, _, _) print "Comando ejecutado de forma asíncrona" end)
+  }, function(exit_code, signal)
+    if exit_code == 0 then
+      print "El comando se ejecutó correctamente"
+    else
+      print "El comando terminó con un código de salida diferente de cero"
+    end
+  end)
+
   handle.stdout:read_start() -- Descarta la salida de stdout
   handle.stderr:read_start() -- Descarta la salida de stderr
 end, { desc = "Show a mental map of the current file and watch for changes" })
