@@ -47,7 +47,7 @@ end
 cmd("MarkmapWatch", function()
   -- Set arguments
   local arguments = {}
-  table.insert "markmap"
+  table.insert(arguments, "markmap")
   table.insert(arguments, "-o")
   table.insert(arguments, html_output)
   if hide_toolbar then table.insert(arguments, hide_toolbar) end
