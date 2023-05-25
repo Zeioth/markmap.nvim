@@ -46,14 +46,18 @@ end
 cmd("MarkmapWatch", function()
   local watch_cmd = "markmap"
   local job = require "plenary.job"
+
+  -- Set arguments
+  local arguments = {}
+  table.insert(arguments, html_output)
+  if hide_toolbar then table.insert(arguments, hide_toolbar) end
+  table.insert(arguments, "--watch")
+  table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+
   job
       :new({
         command = watch_cmd,
-        args = {
-          nil,
-          "--watch",
-          vim.fn.expand "%:p",
-        },
+        args = arguments,
         on_exit = function(j, exit_code)
           local res = table.concat(j:result(), "\n")
           local type = "Success!"
