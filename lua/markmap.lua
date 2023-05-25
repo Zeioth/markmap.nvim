@@ -49,7 +49,7 @@ cmd("MarkmapWatch", function()
   job
       :new({
         command = watch_cmd,
-        args = { "~/activities/2023-backlog.md" },
+        args = { "/home/zeioth/activities/2023-backlog.md" },
         on_exit = function(j, exit_code)
           local res = table.concat(j:result(), "\n")
           local type = "Success!"
