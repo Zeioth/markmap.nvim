@@ -27,9 +27,9 @@ Visualize your Markdown as mindmaps with markmap
 * Run
 ```
 yarn global add markmap-cli
-````    
+```    
 * Now try to run
-````    
+```    
 markmap
 ```
 If you the terminal cannot find the executable, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
