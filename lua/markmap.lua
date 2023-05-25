@@ -49,7 +49,6 @@ cmd("MarkmapWatch", function()
       .. hide_toolbar
       .. " --watch "
       .. vim.fn.expand "%:p"
-  print ""
   handle = uv.spawn(run_command, {
     stdio = { nil, nil, nil },
     detached = true,
