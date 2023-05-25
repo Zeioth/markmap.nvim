@@ -57,7 +57,7 @@ cmd("MarkmapWatch", function()
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
   -- If job already exists, kill it
-  job:kill()
+  job:testestest()
 
   -- Run the job
   job
