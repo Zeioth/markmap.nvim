@@ -18,14 +18,13 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
 {
   "Zeioth/markmap.nvim",
   build = "yarn global add markmap-cli",
-   cmd = {"MarkmapOpen"},
-  config = function()
-    require("markmap").setup({
-      -- Empty string means the same path as the current file, but with html extension.
-      html_output = "/tmp/markmap.html" 
-      hide_toolbar = "false
-    })
-  end
+  cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch"},
+  opts = {
+    -- Empty string means the same path as the current file, but with html extension.
+    html_output = "/tmp/markmap.html",
+    hide_toolbar = "false,
+  },
+  config = function(_, opts) require("markmap").setup(opts) end
 },
 ```
 
