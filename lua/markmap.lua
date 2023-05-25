@@ -33,15 +33,24 @@ M.setup = function(ctx)
     { desc = "Show a mental map of the current file" }
   )
 
-  cmd(
-    "MarkmapSave",
-    function()
-      os.execute(
-        "markmap " .. html_output .. " --no-open " .. vim.fn.expand "%:p"
-      )
-    end,
-    { desc = "Save the HTML file without opening the mindmap" }
-  )
+  cmd("MarkmapSave", function()
+    -- Set arguments
+    local arguments = {}
+    table.insert "markmap"
+    if html_output ~= "" then -- if html_output is "", don't pass the parameter
+      table.insert(arguments, "-o")
+      table.insert(arguments, html_output)
+    end
+    if hide_toolbar then table.insert(arguments, hide_toolbar) end
+    table.insert(arguments, "--no-open")         -- specific to this command
+    table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+
+    -- If a job already exists, kill it before running another one
+    if job then job.kill() end
+
+    -- Run the job
+    job = uv.spawn(comando, { detached = true }, nil)
+  end, { desc = "Save the HTML file without opening the mindmap" })
 end
 
 cmd("MarkmapWatch", function()
@@ -53,14 +62,14 @@ cmd("MarkmapWatch", function()
     table.insert(arguments, html_output)
   end
   if hide_toolbar then table.insert(arguments, hide_toolbar) end
-  table.insert(arguments, "--watch")
+  table.insert(arguments, "--watch")           -- spetific to this command
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
   -- If a job already exists, kill it before running another one
   if job then job.kill() end
 
   -- Run the job
-  local job = uv.spawn(comando, { detached = true }, nil)
+  job = uv.spawn(comando, { detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 return M
