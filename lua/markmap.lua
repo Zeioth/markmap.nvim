@@ -20,7 +20,7 @@ M.setup = function(ctx)
   end
 
   -- Global job
-  local job = require "plenary.job"
+  local job
 
   -- Setup autocmds
   cmd(
@@ -56,23 +56,11 @@ cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
-  -- If job already exists, kill it
-  job:testestest()
+  -- If job already exists, kill it before running another one
+  if job then job.kill() end
 
   -- Run the job
-  job
-      :new({
-        command = watch_cmd,
-        args = arguments,
-        on_exit = function(j, exit_code)
-          local res = table.concat(j:result(), "\n")
-          local type = "Success!"
-
-          if exit_code ~= 0 then type = "Error!" end
-          print(type, res)
-        end,
-      })
-      :start()
+  local job = uv.spawn(comando, { detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 return M
