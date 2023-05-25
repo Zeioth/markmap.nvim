@@ -45,18 +45,16 @@ M.setup = function(ctx)
 end
 
 cmd("MarkmapWatch", function()
-  local watch_cmd = "markmap"
-  local job = require "plenary.job"
-
   -- Set arguments
   local arguments = {}
+  table.insert "markmap"
   table.insert(arguments, "-o")
   table.insert(arguments, html_output)
   if hide_toolbar then table.insert(arguments, hide_toolbar) end
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
-  -- If job already exists, kill it before running another one
+  -- If a job already exists, kill it before running another one
   if job then job.kill() end
 
   -- Run the job
