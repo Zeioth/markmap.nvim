@@ -50,8 +50,6 @@ cmd("MarkmapWatch", function()
       :new({
         command = watch_cmd,
         args = {
-          html_output,
-          hide_toolbar,
           " --watch ",
           vim.fn.expand "%:p",
         },
