@@ -9,7 +9,7 @@ M.setup = function(ctx)
   hide_toolbar = ctx.hide_toolbar
 
   -- bool conditions
-  if html_output == nil then
+  if html_output == nil or html_output == "" then
     html_output = "/tmp/markmap.html" -- by defaullt create the html file here
   end
 
@@ -18,6 +18,9 @@ M.setup = function(ctx)
   else
     hide_toolbar = nil
   end
+
+  -- Global job
+  local job = require "plenary.job"
 
   -- Setup autocmds
   cmd(
@@ -53,6 +56,10 @@ cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
+  -- If job already exists, kill it
+  job:stop()
+
+  -- Run the job
   job
       :new({
         command = watch_cmd,
