@@ -34,7 +34,7 @@ Markmap.nvim provide the next commands:
 |---------------------|-----------------------------------------|
 | **:MarkmapOpen**    | Open the markmap                        |
 | **:MarkmapSave**    | Save without opening                    |
-| **:MarkmapWatch**   | Open the markmap and watch for changes  |
+| **:MarkmapWatch**   | Open the markmap and watch for changes (currentlly broken)  |
 
 ## Troubleshooting
 
