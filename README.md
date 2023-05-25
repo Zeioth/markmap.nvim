@@ -28,7 +28,7 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
 ```
 
 ## How to use
-We expose the next commands:
+Markmap.nvim provide the next commands
 
 * :MarkmapOpen → Open the markmap
 * :MarkmapSave → Save without opening
