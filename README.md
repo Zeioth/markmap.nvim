@@ -34,8 +34,8 @@ markmap
 ```
 If the executable is not found, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
 
-``` Example
-# PATH
+``` sh
+# PATH Example
 export PATH="$HOME/.local/bin:\
 $HOME/.cargo/bin:\
 $HOME/.yarn/bin:\
