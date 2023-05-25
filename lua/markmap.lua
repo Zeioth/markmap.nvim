@@ -72,6 +72,7 @@ autocmd("CursorHold", {
   desc = "Kill all jobs after a grace period",
   group = autocmd_group,
   callback = function()
+    current_time = vim.loop.now()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
       if job ~= nil then job.kill() end                   -- kill jobs
       last_execution = current_time                       -- update time
