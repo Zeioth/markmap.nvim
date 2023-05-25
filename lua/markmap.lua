@@ -9,7 +9,7 @@ M.setup = function(ctx)
   hide_toolbar = ctx.hide_toolbar
 
   -- bool conditions
-  if html_output == nil or html_output == "" then
+  if html_output == nil then
     html_output = "/tmp/markmap.html" -- by defaullt create the html file here
   end
 
@@ -48,8 +48,10 @@ cmd("MarkmapWatch", function()
   -- Set arguments
   local arguments = {}
   table.insert "markmap"
-  table.insert(arguments, "-o")
-  table.insert(arguments, html_output)
+  if html_output ~= "" then -- if html_output is "", don't pass the parameter
+    table.insert(arguments, "-o")
+    table.insert(arguments, html_output)
+  end
   if hide_toolbar then table.insert(arguments, hide_toolbar) end
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
