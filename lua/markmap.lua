@@ -18,7 +18,7 @@ M.setup = function(ctx)
   if hide_toolbar == true then
     hide_toolbar = "--no-toolbar"
   else
-    hide_toolbar = ""
+    hide_toolbar = "--no-toolbar"
   end
 
   -- Setup autocmds
