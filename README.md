@@ -28,11 +28,13 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
 ```
 
 ## How to use
-Markmap.nvim provide the next commands
+Markmap.nvim provide the next commands:
 
-* :MarkmapOpen → Open the markmap
-* :MarkmapSave → Save without opening
-* :MarkmapWatch → Open the markmap and watch for changes
+|  Command            | Description                             |
+|---------------------|-----------------------------------------|
+| **:MarkmapOpen**    | Open the markmap                        |
+| **:MarkmapSave**    | Save without opening                    |
+| **:MarkmapWatch**   | Open the markmap and watch for changes  |
 
 ## Troubleshooting
 
@@ -59,11 +61,3 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
-
-## TODOS
-Expose options for
-
-* --output → In case the user wanna keep the generated html files for some reason. In reality it would be nicer to have :MarkmapSave for this.
-* --watch → We could have the command :MarkmapWatch to open and watch for changes in real time.
-* --no-toolbar → Boolead option to display or not the zoom buttons.
-
