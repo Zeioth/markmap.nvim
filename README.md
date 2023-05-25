@@ -3,6 +3,9 @@ Visualize your Markdown as mindmaps with markmap
 
 ![screenshot_2023-05-25_02-51-13_907564300](https://github.com/Zeioth/markmap.nvim/assets/3357792/e05a5050-622c-47b9-bc96-6e9ffd266b10)
 
+## Motivation
+This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markmap), which I missed when moving to Neovim. If you wanna know more about mindmap check their [website](https://markmap.js.org/), [docs](https://markmap.js.org/docs/markmap) and GitHub [repository](https://github.com/markmap/markmap/tree/master/packages/markmap-cli).
+
 ## Requirements
 
 * yarn
@@ -17,10 +20,21 @@ Visualize your Markdown as mindmaps with markmap
   build = "yarn global add markmap-cli",
    cmd = {"MarkmapOpen"},
   config = function()
-    require("markmap").setup()
+    require("markmap").setup({
+      -- Empty string means the same path as the current file, but with html extension.
+      html_output = "/tmp/markmap.html" 
+      hide_toolbar = "false
+    })
   end
 },
 ```
+
+## How to use
+We expose the next commands:
+
+* :MarkmapOpen → Open the markmap
+* :MarkmapSave → Save without opening
+* :MarkmapWatch → Open the markmap and watch for changes
 
 ## Troubleshooting
 
