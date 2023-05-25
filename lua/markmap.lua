@@ -7,9 +7,9 @@ local M = {}
 
 M.setup = function(ctx)
   -- Setup options
-  local html_output = ctx.html_output
-  local hide_toolbar = ctx.hide_toolbar
-  local grace_period = ctx.hide_toolbar
+  html_output = ctx.html_output
+  hide_toolbar = ctx.hide_toolbar
+  grace_period = ctx.hide_toolbar
 
   -- Set default options
   if html_output == nil then
@@ -28,10 +28,10 @@ M.setup = function(ctx)
 
   -- Set a common job for all commands.
   -- This prevents more than one job running at the same time.
-  local job
+  job = nil
 
   -- Set common arguments to avoid code repetition.
-  local arguments = {}
+  arguments = {}
   table.insert(arguments, "markmap")
   if html_output ~= "" then -- if html_output is "", don't pass the parameter
     table.insert(arguments, "-o")
@@ -67,8 +67,8 @@ end, { desc = "Manually stops markmap watch" })
 
 ---- Autocmds --------------------------------------------------------------
 -- Kill jobs after a grace period
-local last_execution = vim.loop.now() -- timer for grace period
-local autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
+last_execution = vim.loop.now() -- timer for grace period
+autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
 autocmd("CursorHold", {
   desc = "Kill all jobs after a grace period",
   group = autocmd_group,
