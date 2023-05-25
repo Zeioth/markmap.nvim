@@ -18,7 +18,7 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
 {
   "Zeioth/markmap.nvim",
   build = "yarn global add markmap-cli",
-  cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch"},
+  cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop"},
   opts = {
     html_output = "/tmp/markmap.html", -- Using an empty string here means: Current file's path, but with .html extension.
     hide_toolbar = "false",
