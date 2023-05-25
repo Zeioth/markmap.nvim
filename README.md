@@ -11,7 +11,7 @@ Visualize your Markdown as mindmaps with markmap
 
 ```lua
 --  [markdown markmap]
---  https://github.com/markmap/markmap
+--  https://github.com/Zeioth/markmap.nvim
 {
   "Zeioth/markmap.nvim",
   build = "yarn global add markmap-cli",
