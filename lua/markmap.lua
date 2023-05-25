@@ -50,7 +50,7 @@ cmd("MarkmapWatch", function()
       :new({
         command = watch_cmd,
         args = {
-          " --watch ",
+          "--watch",
           vim.fn.expand "%:p",
         },
         on_exit = function(j, exit_code)
