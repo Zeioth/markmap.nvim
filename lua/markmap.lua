@@ -10,11 +10,13 @@ M.setup = function(ctx)
 
   -- bool conditions
   if html_output == nil then
-    html_output = "/tmp/markmap.html" -- by defaullt create the html file here
+    html_output = " -o /tmp/markmap.html " -- by defaullt create the html file here
+  else
+    html_output = " -o " .. html_output
   end
 
   if hide_toolbar == true then
-    hide_toolbar = " --no-toolbar"
+    hide_toolbar = " --no-toolbar "
   else
     hide_toolbar = ""
   end
@@ -24,11 +26,7 @@ M.setup = function(ctx)
     "MarkmapOpen",
     function()
       os.execute(
-        "markmap "
-        .. vim.fn.expand "%:p"
-        .. " -o "
-        .. html_output
-        .. hide_toolbar
+        "markmap " .. vim.fn.expand "%:p" .. html_output .. hide_toolbar
       )
     end,
     { desc = "Show a mental map of the current file" }
@@ -38,11 +36,7 @@ M.setup = function(ctx)
     "MarkmapSave",
     function()
       os.execute(
-        "markmap "
-        .. vim.fn.expand "%:p"
-        .. " -o "
-        .. html_output
-        .. " --no-open"
+        "markmap " .. vim.fn.expand "%:p" .. html_output .. " --no-open"
       )
     end,
     { desc = "Save the HTML file without opening the mindmap" }
@@ -52,7 +46,6 @@ end
 cmd("MarkmapWatch", function()
   local run_command = "markmap "
       .. vim.fn.expand "%:p"
-      .. " -o "
       .. html_output
       .. hide_toolbar
       .. " --watch"
