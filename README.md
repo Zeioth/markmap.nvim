@@ -20,7 +20,7 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
   build = "yarn global add markmap-cli",
   cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch"},
   opts = {
-    html_output = "/tmp/markmap.html", -- Note: Using an empty string here will path as the current markdown file, but with .html extension.
+    html_output = "/tmp/markmap.html", -- Using an empty string here means: Current file's path, but with .html extension.
     hide_toolbar = "false",
   },
   config = function(_, opts) require("markmap").setup(opts) end
