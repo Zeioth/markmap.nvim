@@ -45,8 +45,11 @@ end
 
 cmd("MarkmapWatch", function()
   local watch_cmd = "markmap ~/activities/2023-backlog.md"
-  local handle = uv.spawn(watch_cmd, {
-    stdio = { nil, nil, nil }, -- Discard stdout and stderr
+  local stdout = uv.new_pipe(false)
+  local stderr = uv.new_pipe(false)
+
+  local handle = uv.spawn(comando, {
+    stdio = { nil, stdout, stderr }, -- Redirect stdout and stderr
     detached = true,
   }, function(exit_code, signal)
     if exit_code == 0 then
@@ -54,6 +57,23 @@ cmd("MarkmapWatch", function()
     else
       print "El comando terminó con un código de salida diferente de cero"
     end
+
+    -- Read and display the output from stdout and stderr
+    stdout:read_start(function(err, data)
+      if data then print(data) end
+      if err then
+        -- Handle any error that occurred while reading
+        print("Error reading stdout:", err)
+      end
+    end)
+
+    stderr:read_start(function(err, data)
+      if data then print(data) end
+      if err then
+        -- Handle any error that occurred while reading
+        print("Error reading stderr:", err)
+      end
+    end)
   end)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
