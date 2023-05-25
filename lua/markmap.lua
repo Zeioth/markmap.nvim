@@ -7,9 +7,9 @@ local M = {}
 
 M.setup = function(ctx)
   -- Setup options
-  local = html_output = ctx.html_output
-  local = hide_toolbar = ctx.hide_toolbar
-  local = grace_period = ctx.hide_toolbar
+  html_output = ctx.html_output
+  hide_toolbar = ctx.hide_toolbar
+  grace_period = ctx.hide_toolbar
 
   -- Set default options
   if html_output == nil then
@@ -28,10 +28,10 @@ M.setup = function(ctx)
 
   -- Set a common job for all commands.
   -- This prevents more than one job running at the same time.
-  local job = nil
+  job = nil
 
   -- Set common arguments to avoid code repetition.
-  local arguments = {}
+  arguments = {}
   if html_output ~= "" then -- if html_output is "", don't pass the parameter
     table.insert(arguments, "-o")
     table.insert(arguments, html_output)
