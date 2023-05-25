@@ -23,17 +23,22 @@ M.setup = function(ctx)
 
 
   -- Setup autocmds
-  cmd("MarkmapOpen", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar)  end, { desc = "Show a mental map of the current file" })
+  cmd(
+  "MarkmapOpen", function()
+	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar)
+	end, { desc = "Show a mental map of the current file" })
+
+  cmd(
+    "MarkmapSave", function()
+	    os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. " --no-open")
+	  end, { desc = "Save the HTML file without opening the mindmap" })
   end
 
-  cmd("MarkmapSave", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. " --no-open")  end, { desc = "Save the HTML file without opening the mindmap" })
-  end
-
-  cmd("MarkmapWatch", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )  end, { desc = "Show a mental map of the current file and watch for changes" })
-  end
+  cmd(
+    "MarkmapWatch", function()
+	    os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )
+	  end, { desc = "Show a mental map of the current file and watch for changes" }
+	  )
 
 
 return M
