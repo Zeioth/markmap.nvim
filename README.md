@@ -1,7 +1,11 @@
 # Markmap.nvim
 Visualize your Markdown as mindmaps with markmap
 
-![screenshot_2023-05-25_02-51-13_907564300](https://github.com/Zeioth/markmap.nvim/assets/3357792/6d2e2494-5240-4def-adf2-03a89c993a19)
+![screenshot_2023-05-25_02-51-13_907564300](https://github.com/Zeioth/markmap.nvim/assets/3357792/e05a5050-622c-47b9-bc96-6e9ffd266b10)
+
+## Requirements
+
+* yarn
 
 ## How to install using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -17,4 +21,22 @@ Visualize your Markdown as mindmaps with markmap
     require("markmap").setup()
   end
 },
+```
+
+## Troubleshooting
+
+* If after manually running "yarn global add markmap-cli" you get an error when try to run "markman" in your terminal, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
+
+``` Example
+# PATH
+export PATH="$HOME/.local/bin:\
+$HOME/.cargo/bin:\
+$HOME/.yarn/bin:\
+$HOME/.config/yarn/global/node_modules/.bin:\
+$HOME/.local/share/gem/ruby/3.0.0/bin:\
+$HOME/.cargo/env\
+/root/.local/share/gem/ruby/3.0.0/bin:\
+/usr/local/bin:\
+/usr/share/nvm/init-nvm.sh \
+$PATH"
 ```
