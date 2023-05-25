@@ -20,8 +20,7 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
   build = "yarn global add markmap-cli",
   cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch"},
   opts = {
-    -- Empty string means the same path as the current file, but with html extension.
-    html_output = "/tmp/markmap.html",
+    html_output = "/tmp/markmap.html", -- Empty string will set the same path as the current mawkdown file, but with .html extension.
     hide_toolbar = "false,
   },
   config = function(_, opts) require("markmap").setup(opts) end
