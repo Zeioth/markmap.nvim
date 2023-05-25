@@ -1,73 +1,39 @@
 -- This plugin is a wrapper for markmap-cli
-local uv = vim.loop
 local cmd = vim.api.nvim_create_user_command
 local M = {}
 
 M.setup = function(ctx)
-	-- Setup options
-	local html_output = ctx.html_output
-	local hide_toolbar = ctx.hide_toolbar
 
-	-- bool conditions
-	if html_output == nil then
-		html_output = "/tmp/markmap.html" -- by defaullt create the html file here
-	end
+  -- Setup options
+  html_output = ctx.html_output
+  hide_toolbar = ctx.hide_toolbar
 
-	if hide_toolbar == nil then hide_toolbar = "" end
+  -- bool conditions
+  if (html_output == nil) then
+    html_output = "/tmp/markmap.html" -- by defaullt create the html file here
+  end
 
-	if hide_toolbar == true then hide_toolbar = " --no-toolbar" end
+  if (html_output == "" or html_output == nil) then
+    html_output = ""
+  end
 
-	-- Setup autocmds
-	local handle = nil -- async runner we use for watch/watchstop
-	cmd(
-		"MarkmapOpen",
-		function()
-			os.execute(
-				"markmap "
-				.. vim.fn.expand "%:p"
-				.. " -o "
-				.. html_output
-				.. hide_toolbar
-			)
-		end,
-		{ desc = "Show a mental map of the current file" }
-	)
+  if (hide_toolbar == false or hide_toolbar == nil) then
+    hide_toolbar = " --no-toolbar"
+  end
 
-	cmd(
-		"MarkmapSave",
-		function()
-			os.execute(
-				"markmap "
-				.. vim.fn.expand "%:p"
-				.. " -o "
-				.. html_output
-				.. " --no-open"
-			)
-		end,
-		{ desc = "Save the HTML file without opening the mindmap" }
-	)
 
-	cmd(
-		"MarkmapWatch",
-		function()
-			-- If there was a server already running, stop it so they don't stack.
-			if handle ~= nil then handle.close() end
+  -- Setup autocmds
+  cmd("MarkmapOpen", function()
+	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar)  end, { desc = "Show a mental map of the current file" })
+  end
 
-			-- Now we can run
-			local execute = "markmap "
-					.. vim.fn.expand "%:p"
-					.. " -o "
-					.. html_output
-					.. hide_toolbar
-					.. " --watch"
-			handle = uv.spawn(execute, {}) -- run async
-		end,
-		{ desc = "Show a mental map of the current file and watch for changes" }
-	)
+  cmd("MarkmapSave", function()
+	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. " --no-open")  end, { desc = "Save the HTML file without opening the mindmap" })
+  end
 
-	cmd("MarkmapWatchStop", function()
-		if handle ~= nil then handle.close() end
-	end, { desc = "Stop the Markmap server after using watch" })
+  cmd("MarkmapWatch", function()
+	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )  end, { desc = "Show a mental map of the current file and watch for changes" })
+  end
 
-	return M
-end
+
+return M
