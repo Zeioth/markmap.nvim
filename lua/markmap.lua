@@ -44,10 +44,10 @@ M.setup = function(ctx)
 end
 
 cmd("MarkmapWatch", function()
-  local watch_cmd = "markmap ~/activities/2023-backlog.md"
+  local watch_cmd = "ls"
   handle = uv.spawn(watch_cmd, {
     stdio = { nil, nil, nil },
-    detached = false,
+    detached = true,
   }, function(_, _, _) print "Comando ejecutado de forma asíncrona" end)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
