@@ -44,37 +44,21 @@ M.setup = function(ctx)
 end
 
 cmd("MarkmapWatch", function()
-  local watch_cmd = "markmap ~/activities/2023-backlog.md"
-  local stdout = uv.new_pipe(false)
-  local stderr = uv.new_pipe(false)
+  local watch_cmd = "markmap"
+  local job = require "plenary.job"
+  job
+      :new({
+        command = watch_cmd,
+        args = { "~/activities/2023-backlog.md" },
+        on_exit = function(j, exit_code)
+          local res = table.concat(j:result(), "\n")
+          local type = "Success!"
 
-  local handle = uv.spawn(comando, {
-    stdio = { nil, stdout, stderr }, -- Redirect stdout and stderr
-    detached = true,
-  }, function(exit_code, signal)
-    if exit_code == 0 then
-      print "El comando se ejecutó correctamente"
-    else
-      print "El comando terminó con un código de salida diferente de cero"
-    end
-
-    -- Read and display the output from stdout and stderr
-    stdout:read_start(function(err, data)
-      if data then print(data) end
-      if err then
-        -- Handle any error that occurred while reading
-        print("Error reading stdout:", err)
-      end
-    end)
-
-    stderr:read_start(function(err, data)
-      if data then print(data) end
-      if err then
-        -- Handle any error that occurred while reading
-        print("Error reading stderr:", err)
-      end
-    end)
-  end)
+          if exit_code ~= 0 then type = "Error!" end
+          print(type, res)
+        end,
+      })
+      :start()
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 return M
