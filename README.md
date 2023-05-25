@@ -63,5 +63,5 @@ $PATH"
 ```
 
 ## TODOS
-* The watch feature is currently broken: We should calll it async so we can keep working on nvim.
+* The watch feature is currently broken: We should call it async so we can keep working on nvim.
 * We should though kill the process after a certain time. Otherwise processess may stack. It would be nice to give the user an option to decide the session time, and/or a command to kill all processess.
