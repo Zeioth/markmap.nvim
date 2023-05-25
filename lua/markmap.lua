@@ -53,7 +53,6 @@ cmd("MarkmapWatch", function()
     stdio = { nil, nil, nil },
     detached = true,
   }, function(_, _, _) print "Comando ejecutado de forma asíncrona" end)
-  uv.unref(watch_cmd)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 return M
