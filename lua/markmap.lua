@@ -1,10 +1,9 @@
 local M = {}
 
--- TODO: do this stuff
--- antother thing
--- TODO: another TODO
-
 M.setup = function()
+  cmd("MarkmapOpen", function()
+	  os.execute("markmap " .. vim.api.nvim_get_current_buf(bufnr))
+  end, { desc = "Show a mental map of the current file" })
   print("ALL OK")
 end
 
