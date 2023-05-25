@@ -10,9 +10,7 @@ M.setup = function(ctx)
 
   -- bool conditions
   if html_output == nil then
-    html_output = " -o /tmp/markmap.html " -- by defaullt create the html file here
-  else
-    html_output = "-o " .. html_output
+    html_output = "/tmp/markmap.html" -- by defaullt create the html file here
   end
 
   if hide_toolbar == true then
@@ -49,7 +47,9 @@ cmd("MarkmapWatch", function()
 
   -- Set arguments
   local arguments = {}
+  table.insert(arguments, "-o")
   table.insert(arguments, html_output)
+
   --if hide_toolbar then table.insert(arguments, hide_toolbar) end
   table.insert(arguments, "--watch")
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
