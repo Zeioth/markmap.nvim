@@ -13,27 +13,32 @@ M.setup = function(ctx)
     html_output = "/tmp/markmap.html" -- by defaullt create the html file here
   end
 
-  if (html_output == "" or html_output == nil) then
-    html_output = ""
+  if (hide_toolbar == nil) then
+    hide_toolbar = ""
   end
 
-  if (hide_toolbar == false or hide_toolbar == nil) then
+  if (hide_toolbar == true) then
     hide_toolbar = " --no-toolbar"
   end
 
 
   -- Setup autocmds
-  cmd("MarkmapOpen", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar)  end, { desc = "Show a mental map of the current file" })
+  cmd(
+  "MarkmapOpen", function()
+	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar)
+	end, { desc = "Show a mental map of the current file" })
+
+  cmd(
+    "MarkmapSave", function()
+	    os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. " --no-open")
+	  end, { desc = "Save the HTML file without opening the mindmap" })
   end
 
-  cmd("MarkmapSave", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. " --no-open")  end, { desc = "Save the HTML file without opening the mindmap" })
-  end
-
-  cmd("MarkmapWatch", function()
-	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )  end, { desc = "Show a mental map of the current file and watch for changes" })
-  end
+  cmd(
+    "MarkmapWatch", function()
+	    os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )
+	  end, { desc = "Show a mental map of the current file and watch for changes" }
+	  )
 
 
 return M
