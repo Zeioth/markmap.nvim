@@ -20,10 +20,21 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
   build = "yarn global add markmap-cli",
    cmd = {"MarkmapOpen"},
   config = function()
-    require("markmap").setup()
+    require("markmap").setup({
+      -- Empty string means the same path as the current file, but with html extension.
+      html_output = "/tmp/markmap.html" 
+      hide_toolbar = "false
+    })
   end
 },
 ```
+
+## How to use
+We expose the next commands:
+
+* :MarkmapOpen → Open the markmap
+* :MarkmapSave → Save without opening
+* :MarkmapWatch → Open the markmap and watch for changes
 
 ## Troubleshooting
 
