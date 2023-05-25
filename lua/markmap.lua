@@ -21,6 +21,9 @@ M.setup = function(ctx)
     hide_toolbar = ""
   end
 
+  -- Setup variables
+  local current_buffer_path = vim.fn.expand "%:p"
+
   -- Setup autocmds
   cmd(
     "MarkmapOpen",
@@ -49,7 +52,7 @@ cmd("MarkmapWatch", function()
   job
       :new({
         command = watch_cmd,
-        args = { "/home/zeioth/activities/2023-backlog.md" },
+        args = { current_buffer_path },
         on_exit = function(j, exit_code)
           local res = table.concat(j:result(), "\n")
           local type = "Success!"
