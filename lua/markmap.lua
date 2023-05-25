@@ -1,6 +1,8 @@
 -- This plugin is a wrapper for markmap-cli
+local uv = vim.loop
 local cmd = vim.api.nvim_create_user_command
 local M = {}
+
 
 M.setup = function(ctx)
 
@@ -36,7 +38,8 @@ M.setup = function(ctx)
 
   cmd(
     "MarkmapWatch", function()
-	    os.execute("markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch" )
+      local run = "markmap " .. vim.fn.expand("%:p") .. " -o " .. html_output .. hide_toolbar .. " --watch"
+	    local handle = uv.spawn(run) -- run async
 	  end, { desc = "Show a mental map of the current file and watch for changes" }
 	  )
 
