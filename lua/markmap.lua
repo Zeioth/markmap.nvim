@@ -26,7 +26,7 @@ M.setup = function(ctx)
     "MarkmapOpen",
     function()
       os.execute(
-        "markmap " .. vim.fn.expand "%:p" .. html_output .. hide_toolbar
+        "markmap " .. html_output .. hide_toolbar .. vim.fn.expand "%:p"
       )
     end,
     { desc = "Show a mental map of the current file" }
@@ -36,7 +36,7 @@ M.setup = function(ctx)
     "MarkmapSave",
     function()
       os.execute(
-        "markmap " .. vim.fn.expand "%:p" .. html_output .. " --no-open"
+        "markmap " .. html_output .. " --no-open " .. vim.fn.expand "%:p"
       )
     end,
     { desc = "Save the HTML file without opening the mindmap" }
@@ -45,10 +45,10 @@ end
 
 cmd("MarkmapWatch", function()
   local run_command = "markmap "
-      .. vim.fn.expand "%:p"
       .. html_output
       .. hide_toolbar
-      .. " --watch"
+      .. " --watch "
+      .. vim.fn.expand "%:p"
   print ""
   handle = uv.spawn(run_command, {
     stdio = { nil, nil, nil },
