@@ -55,7 +55,7 @@ cmd("MarkmapWatch", function()
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
 
   -- If a job already exists, kill it before running another one
-  if job then job.kill() end
+  --if job then job.kill() end
 
   -- Run the job
   local job = uv.spawn(comando, { detached = true }, nil)
