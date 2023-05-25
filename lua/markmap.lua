@@ -1,10 +1,10 @@
--- open markman
+-- This plugin is a wrapper for markmap-cli
 local cmd = vim.api.nvim_create_user_command
 local M = {}
 
 M.setup = function()
 
-  -- Setup autocmd
+  -- Setup autocmds
   cmd("MarkmapOpen", function()
 	  os.execute("markmap " .. vim.fn.expand("%:p") .. " -o /tmp/markmap.html" )  end, { desc = "Show a mental map of the current file" })
   end
