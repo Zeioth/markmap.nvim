@@ -30,11 +30,6 @@ M.setup = function(ctx)
   -- This prevents more than one job running at the same time.
   job = nil
 
-  -- Kill -9 helper, because markman doesn't like dying
-  function force_kill()
-    if job ~= nil then uv.kill(job, 9) end
-  end
-
   -- Set common arguments to avoid code repetition.
   arguments = {}
   if html_output ~= "" then -- if html_output is "", don't pass the parameter
@@ -46,14 +41,14 @@ M.setup = function(ctx)
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    force_kill()
+    if job ~= nil then uv.kill(process, 9) end
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     table.insert(arguments, "--no-open")         -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    force_kill()                                 -- kill jobs
+    if job ~= nil then uv.kill(process, 9) end   -- kill jobs
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 end
@@ -61,12 +56,12 @@ end
 cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch")           -- spetific to this command
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-  force_kill()
+  if job ~= nil then uv.kill(process, 9) end
   job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 cmd("MarkmapWatchStop", function()
-  force_kill() -- kill jobs
+  if job ~= nil then uv.kill(process, 9) end -- kill jobs
 end, { desc = "Manually stops markmap watch" })
 
 -- Autocmds --------------------------------------------------------------
@@ -79,7 +74,7 @@ autocmd("CursorHold", {
   callback = function()
     current_time = vim.loop.now()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
-      force_kill()                                        -- kill jobs
+      if job ~= nil then uv.kill(process, 9) end          -- kill jobs
       last_execution = current_time                       -- update time
     end
   end,
@@ -90,7 +85,7 @@ autocmd("VimLeavePre", {
   desc = "Kill all jobs before closing vim to they don't keep running wild",
   group = autocmd_group,
   callback = function()
-    force_kill() -- kill jobs
+    if job ~= nil then uv.kill(job, 9) end -- kill jobs
   end,
 })
 
