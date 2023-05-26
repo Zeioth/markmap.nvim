@@ -20,9 +20,9 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
   build = "yarn global add markmap-cli",
   cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop"},
   opts = {
-    html_output = "/tmp/markmap.html", -- Using an empty string here means: Current file's path, but with .html extension.
-    hide_toolbar = "false",
-    grace_period = 3600000 -- Stops makmap watch after 60 minutes if :MarkmapWatchStop has not been used. Set to 0 to disable.
+    html_output = "/tmp/markmap.html", -- (default) Setting a empty string "" here means: [Current buffer path].html
+    hide_toolbar = "false", -- (default)
+    grace_period = 3600000 -- (default ) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
   },
   config = function(_, opts) require("markmap").setup(opts) end
 },
