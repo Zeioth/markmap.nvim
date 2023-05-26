@@ -48,7 +48,7 @@ M.setup = function(ctx)
   cmd("MarkmapSave", function()
     table.insert(arguments, "--no-open") -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
+    if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 end
@@ -61,7 +61,7 @@ cmd("MarkmapWatch", function()
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 cmd("MarkmapWatchStop", function()
-  if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
+  if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
 end, { desc = "Manually stops markmap watch" })
 
 -- Autocmds --------------------------------------------------------------
@@ -69,23 +69,23 @@ end, { desc = "Manually stops markmap watch" })
 last_execution = vim.loop.now() -- timer for grace period
 autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
 autocmd("CursorHold", {
-  desc = "Kill all jobs after a grace period",
+  desc = "Kill all markmap jobs after a grace period",
   group = autocmd_group,
   callback = function()
     current_time = vim.loop.now()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
-      if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
+      if job ~= nil then uv.process_kill(job, 9) end -- kkill -9 jobs
       last_execution = current_time -- update time
     end
   end,
 })
 
--- Before vim exits, we want to stop all jobs
+-- Before nvim exits, stop all jobs
 autocmd("VimLeavePre", {
-  desc = "Kill all jobs before closing vim to they don't keep running wild",
+  desc = "Kill all markmap jobs before closing nvim",
   group = autocmd_group,
   callback = function()
-    if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
+    if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
   end,
 })
 
