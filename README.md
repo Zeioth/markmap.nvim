@@ -54,6 +54,7 @@ If the executable is not found, that means you need to add yarn to your PATH. Th
 # PATH Example
 export PATH="$HOME/.local/bin:\
 $HOME/.cargo/bin:\
+$HOME/.npm-global/bin:\
 $HOME/.yarn/bin:\
 $HOME/.config/yarn/global/node_modules/.bin:\
 $HOME/.local/share/gem/ruby/3.0.0/bin:\
@@ -64,6 +65,8 @@ $HOME/.cargo/env\
 $PATH"
 ```
 If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
+
+If you prefer using npm over yarn, you can, but make sure you have the user space setted up correctly [here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) as in many systems this is not enabled by default for npm.
 
 ## TODOS
 * Add docs so we can use :help markmap
