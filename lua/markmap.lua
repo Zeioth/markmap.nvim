@@ -69,11 +69,11 @@ end, { desc = "Manually stops markmap watch" })
 last_execution = vim.loop.now() -- timer for grace period
 autocmd("CursorHold", {
   desc = "Kill all markmap jobs after a grace period",
-  group = augroup("markmap_kil_after_grace_period", { clear = true }),
+  group = augroup("markmap_kill_after_grace_period", { clear = true }),
   callback = function()
     -- If grace_periodd is disabled, remove the autocmd and return
     if grace_period == 0 then
-      vim.cmd "autocmd! markmap_kil_after_grace_period"
+      vim.cmd "autocmd! markmap_kill_after_grace_period"
       return
     end
 
