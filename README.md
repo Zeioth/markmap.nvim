@@ -65,4 +65,5 @@ $PATH"
 ```
 
 ## TODOS
+* Add docs so we can use :help markmap
 * Add health file to enable :checkhealth markmap
