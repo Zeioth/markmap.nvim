@@ -63,6 +63,7 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
+If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
 
 ## TODOS
 * Add docs so we can use :help markmap
