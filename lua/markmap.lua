@@ -31,7 +31,7 @@ M.setup = function(ctx)
   job = nil
 
   -- Kill -9 helper, because markman doesn't like dying
-  local function force_kill(job)
+  function force_kill(job)
     local pid = uv.process_pid(job)
     if vim.fn.has "win32" == 1 then -- windows
       os.execute(string.format("taskkill /F /PID %d", pid))
