@@ -49,10 +49,10 @@ M.setup = function(ctx)
           os.execute(string.format("kill -9 %d", pid))
         end
       end
-    end
 
-    -- Close the job handle
-    uv.close(job)
+      -- Close the job handle
+      uv.close(job)
+    end
   end
 
   -- Set common arguments to avoid code repetition.
