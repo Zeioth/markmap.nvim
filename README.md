@@ -64,9 +64,9 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
-If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
-
 If you prefer using npm over yarn, you can, but make sure you have the user space correctly configured [here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) as in many systems this is not enabled by default.
+
+If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
 
 ## TODOS
 * Add docs so we can use :help markmap
