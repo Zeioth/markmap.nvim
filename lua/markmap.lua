@@ -41,14 +41,14 @@ M.setup = function(ctx)
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.process_kill(process, 9) end
+    if job ~= nil then uv.process_kill(job, 9) end
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     table.insert(arguments, "--no-open") -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.process_kill(process, 9) end -- kill jobs
+    if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 end
@@ -56,12 +56,12 @@ end
 cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch") -- spetific to this command
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-  if job ~= nil then uv.process_kill(process, 9) end
+  if job ~= nil then uv.process_kill(job, 9) end
   job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 cmd("MarkmapWatchStop", function()
-  if job ~= nil then uv.process_kill(process, 9) end -- kill jobs
+  if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
 end, { desc = "Manually stops markmap watch" })
 
 -- Autocmds --------------------------------------------------------------
@@ -85,7 +85,7 @@ autocmd("VimLeavePre", {
   desc = "Kill all jobs before closing vim to they don't keep running wild",
   group = autocmd_group,
   callback = function()
-    if job ~= nil then uv.process_kill(process, 9) end -- kill jobs
+    if job ~= nil then uv.process_kill(job, 9) end -- kill jobs
   end,
 })
 
