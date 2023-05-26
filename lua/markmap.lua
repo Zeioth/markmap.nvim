@@ -67,11 +67,17 @@ end, { desc = "Manually stops markmap watch" })
 -- Autocmds --------------------------------------------------------------
 -- Kill jobs after a grace period
 last_execution = vim.loop.now() -- timer for grace period
-autocmd_group = augroup("markmap_auto_kill_jobs", { clear = true })
 autocmd("CursorHold", {
   desc = "Kill all markmap jobs after a grace period",
-  group = autocmd_group,
+  group = augroup("markmap_kil_after_grace_period", { clear = true }),
   callback = function()
+    -- If grace_periodd is disabled, remove the autocmd and return
+    if grace_period == 0 then
+      vim.cmd "autocmd! markmap_kil_after_grace_period"
+      return
+    end
+
+    -- Otherwise, use grace_period
     current_time = vim.loop.now()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
       if job ~= nil then uv.process_kill(job, 9) end -- kkill -9 jobs
@@ -83,7 +89,7 @@ autocmd("CursorHold", {
 -- Before nvim exits, stop all jobs
 autocmd("VimLeavePre", {
   desc = "Kill all markmap jobs before closing nvim",
-  group = autocmd_group,
+  group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
   callback = function()
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
   end,
