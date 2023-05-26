@@ -30,6 +30,17 @@ M.setup = function(ctx)
   -- This prevents more than one job running at the same time.
   job = nil
 
+  -- Kill -9 helper, because markman doesn't like dying
+  local function force_kill(job)
+    local pid = uv.process_pid(job)
+    if vim.fn.has "win32" == 1 then -- windows
+      os.execute(string.format("taskkill /F /PID %d", pid))
+    else                            -- Unix
+      os.execute(string.format("kill -9 %d", pid))
+    end
+    force_kill(job) -- Also kill the handler
+  end
+
   -- Set common arguments to avoid code repetition.
   arguments = {}
   if html_output ~= "" then -- if html_output is "", don't pass the parameter
@@ -41,14 +52,14 @@ M.setup = function(ctx)
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.close(job) end
+    if job ~= nil then force_kill(job) end
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     table.insert(arguments, "--no-open")         -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.close(job) end         -- kill jobs
+    if job ~= nil then force_kill(job) end       -- kill jobs
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 end
@@ -56,12 +67,12 @@ end
 cmd("MarkmapWatch", function()
   table.insert(arguments, "--watch")           -- spetific to this command
   table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-  if job ~= nil then uv.close(job) end
+  if job ~= nil then force_kill(job) end
   job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
 end, { desc = "Show a mental map of the current file and watch for changes" })
 
 cmd("MarkmapWatchStop", function()
-  if job ~= nil then uv.close(job) end -- kill jobs
+  if job ~= nil then force_kill(job) end -- kill jobs
 end, { desc = "Manually stops markmap watch" })
 
 -- Autocmds --------------------------------------------------------------
@@ -74,7 +85,7 @@ autocmd("CursorHold", {
   callback = function()
     current_time = vim.loop.now()
     if current_time - last_execution >= grace_period then -- if grace period exceeded
-      if job ~= nil then uv.close(job) end                -- kill jobs
+      if job ~= nil then force_kill(job) end              -- kill jobs
       last_execution = current_time                       -- update time
     end
   end,
@@ -85,7 +96,7 @@ autocmd("VimLeavePre", {
   desc = "Kill all jobs before closing vim to they don't keep running wild",
   group = autocmd_group,
   callback = function()
-    if job ~= nil then uv.close(job) end -- kill jobs
+    if job ~= nil then force_kill(job) end -- kill jobs
   end,
 })
 
