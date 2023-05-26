@@ -33,9 +33,9 @@ Markmap.nvim provide the next commands:
 
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
-| **:MarkmapOpen**    | Open the markmap                        |
+| **:MarkmapOpen**    | Open markmap                        |
 | **:MarkmapSave**    | Save without opening                    |
-| **:MarkmapWatch**   | Open the markmap and watch for changes  |
+| **:MarkmapWatch**   | Open markmap and watch for changes  |
 | **:MarkmapWatchStop** | The watch server ends automatically after a grace period, but it can also be stopped manually with this command. |
 
 ## Troubleshooting
@@ -63,6 +63,8 @@ $HOME/.cargo/env\
 /usr/share/nvm/init-nvm.sh \
 $PATH"
 ```
+If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
 
 ## TODOS
-* Currently debugging, please be patient.
+* Add docs so we can use :help markmap
+* Add health file to enable :checkhealth markmap
