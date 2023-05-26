@@ -22,6 +22,7 @@ This plugin is based on vim's [coc-markmap](https://github.com/markmap/coc-markm
   opts = {
     html_output = "/tmp/markmap.html", -- Using an empty string here means: Current file's path, but with .html extension.
     hide_toolbar = "false",
+    grace_period = 3600000 -- Stops makmap watch after 60 minutes if :MarkmapWatchStop has not been used. Set to 0 to disable.
   },
   config = function(_, opts) require("markmap").setup(opts) end
 },
