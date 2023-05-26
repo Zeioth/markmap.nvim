@@ -34,18 +34,13 @@ M.setup = function(ctx)
   function force_kill()
     if job ~= nil then
       local pid
-      if vim.fn.has "win32" == 1 then -- Windows
-        pid = vim.fn.system(
-          string.format(
-            "wmic process get ProcessId,ParentProcessId | findstr /C:%d",
-            job
-          )
-        )
-      else -- Unix
-        pid = vim.fn.system(string.format("ps -o pid= --ppid %d", job))
+      if uv.kill ~= nil then
+        pid = uv.kill(job, 0) -- Use uv.kill with signal 0 to retrieve the process ID
+      else
+        -- Fallback for older versions of Neovim without uv.kill
+        local handle = uv.process_handle(job)
+        pid = uv.get_process_pid(handle)
       end
-
-      pid = tonumber(pid)
 
       if pid ~= nil then
         if vim.fn.has "win32" == 1 then -- Windows
@@ -54,9 +49,6 @@ M.setup = function(ctx)
           os.execute(string.format("kill -9 %d", pid))
         end
       end
-
-      -- Close the job handle
-      uv.close(job)
     end
   end
 
