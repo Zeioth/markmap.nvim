@@ -65,4 +65,4 @@ $PATH"
 ```
 
 ## TODOS
-* Currently debugging, please be patient.
+* Add health file to enable :checkhealth markmap
