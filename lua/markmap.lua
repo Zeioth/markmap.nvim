@@ -32,24 +32,7 @@ M.setup = function(ctx)
 
   -- Kill -9 helper, because markman doesn't like dying
   function force_kill()
-    if job ~= nil then
-      local pid
-      if uv.kill ~= nil then
-        pid = uv.kill(job, 0) -- Use uv.kill with signal 0 to retrieve the process ID
-      else
-        -- Fallback for older versions of Neovim without uv.kill
-        local handle = uv.process_handle(job)
-        pid = uv.get_process_pid(handle)
-      end
-
-      if pid ~= nil then
-        if vim.fn.has "win32" == 1 then -- Windows
-          os.execute(string.format("taskkill /F /PID %d", pid))
-        else                            -- Unix
-          os.execute(string.format("kill -9 %d", pid))
-        end
-      end
-    end
+    if job ~= nil then uv.kill(job, 9) end
   end
 
   -- Set common arguments to avoid code repetition.
