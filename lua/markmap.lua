@@ -13,7 +13,12 @@ M.setup = function(ctx)
 
   -- Set default options
   if html_output == nil then
-    html_output = "/tmp/markmap.html" -- by defaullt create the html file here
+    local is_windows = vim.loop.os_uname().sysname == "Windows"
+    if is_windows then -- windows
+      html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
+    else -- unix
+      html_output = "/tmp/markmap.html"
+    end
   end
 
   if hide_toolbar == true then
