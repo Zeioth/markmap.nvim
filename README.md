@@ -36,7 +36,7 @@ Markmap.nvim provide the next commands:
 | **:MarkmapOpen**    | Open markmap                        |
 | **:MarkmapSave**    | Save without opening                    |
 | **:MarkmapWatch**   | Open markmap and watch for changes  |
-| **:MarkmapWatchStop** | The watch server ends automatically after a grace period, but it can also be stopped manually with this command. |
+| **:MarkmapWatchStop** | The watch server ends automatically after a grace period, or when closing nvim. But it can also be stopped manually with this command. |
 
 ## Troubleshooting
 
