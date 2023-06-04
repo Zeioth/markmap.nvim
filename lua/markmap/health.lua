@@ -46,7 +46,7 @@ function M.check()
       msg = "Used to install markmap-cli. This operation can also be performed using npm instead, or even manually. See README.md for more info:/nhttps://github.com/Zeioth/markmap.nvim",
     },
     {
-      cmd = "markmap-cli",
+      cmd = "markmap",
       type = "error",
       msg = "Used to for the main functionality of the plugin. markmap-cli must be executable in a terminal.",
     },
