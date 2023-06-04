@@ -16,7 +16,7 @@ M.setup = function(ctx)
     local is_windows = vim.loop.os_uname().sysname == "Windows"
     if is_windows then -- windows
       html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
-    else -- unix
+    else               -- unix
       html_output = "/tmp/markmap.html"
     end
   end
@@ -51,53 +51,57 @@ M.setup = function(ctx)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
-    table.insert(arguments, "--no-open") -- specific to this command
-    table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+    table.insert(arguments, "--no-open")           -- specific to this command
+    table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
-end
 
-cmd("MarkmapWatch", function()
-  table.insert(arguments, "--watch") -- spetific to this command
-  table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-  if job ~= nil then uv.process_kill(job, 9) end
-  job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
-end, { desc = "Show a mental map of the current file and watch for changes" })
+  cmd(
+    "MarkmapWatch",
+    function()
+      table.insert(arguments, "--watch")           -- spetific to this command
+      table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+      if job ~= nil then uv.process_kill(job, 9) end
+      job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
+    end,
+    { desc = "Show a mental map of the current file and watch for changes" }
+  )
 
-cmd("MarkmapWatchStop", function()
-  if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
-end, { desc = "Manually stops markmap watch" })
-
--- Autocmds --------------------------------------------------------------
--- Kill jobs after a grace period
-last_execution = vim.loop.now() -- timer for grace period
-autocmd("CursorHold", {
-  desc = "Kill all markmap jobs after a grace period",
-  group = augroup("markmap_kill_after_grace_period", { clear = true }),
-  callback = function()
-    -- If grace_periodd is disabled, remove the autocmd and return
-    if grace_period == 0 then
-      vim.cmd "autocmd! markmap_kill_after_grace_period"
-      return
-    end
-
-    -- Otherwise, use grace_period
-    current_time = vim.loop.now()
-    if current_time - last_execution >= grace_period then -- if grace period exceeded
-      if job ~= nil then uv.process_kill(job, 9) end -- kkill -9 jobs
-      last_execution = current_time -- update time
-    end
-  end,
-})
-
--- Before nvim exits, stop all jobs
-autocmd("VimLeavePre", {
-  desc = "Kill all markmap jobs before closing nvim",
-  group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
-  callback = function()
+  cmd("MarkmapWatchStop", function()
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
-  end,
-})
+  end, { desc = "Manually stops markmap watch" })
+
+  -- Autocmds --------------------------------------------------------------
+  -- Kill jobs after a grace period
+  last_execution = vim.loop.now() -- timer for grace period
+  autocmd("CursorHold", {
+    desc = "Kill all markmap jobs after a grace period",
+    group = augroup("markmap_kill_after_grace_period", { clear = true }),
+    callback = function()
+      -- If grace_periodd is disabled, remove the autocmd and return
+      if grace_period == 0 then
+        vim.cmd "autocmd! markmap_kill_after_grace_period"
+        return
+      end
+
+      -- Otherwise, use grace_period
+      current_time = vim.loop.now()
+      if current_time - last_execution >= grace_period then -- if grace period exceeded
+        if job ~= nil then uv.process_kill(job, 9) end      -- kkill -9 jobs
+        last_execution = current_time                       -- update time
+      end
+    end,
+  })
+
+  -- Before nvim exits, stop all jobs
+  autocmd("VimLeavePre", {
+    desc = "Kill all markmap jobs before closing nvim",
+    group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
+    callback = function()
+      if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
+    end,
+  })
+end
 
 return M
