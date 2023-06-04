@@ -4,7 +4,7 @@ local cmd = vim.api.nvim_create_user_command
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local M = {}
-local health = require('health')
+local health = require('markmap.nvim.health')
 
 M.health = health
 M.setup = function(ctx)
