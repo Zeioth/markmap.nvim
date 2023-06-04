@@ -39,7 +39,7 @@ Markmap.nvim provide the next commands:
 | **:MarkmapWatchStop** | The watch server ends automatically after a grace period, or when closing nvim. But it can also be stopped manually with this command. |
 
 ## Troubleshooting
-Run `healthcheck markmap`. This command will tell you the depencencies you are missing. If the command do not exist, it means you are using an async package manager, so double check the package is beign loaded. These are the most common issues you will find:
+Run `:healthcheck markmap`. This command will tell you the depencencies you are missing. If the command do not exist, it means you are using an async package manager, so double check the package is beign loaded. These are the most common issues you will find:
 
 * Run
 ```
@@ -68,6 +68,3 @@ $PATH"
 If you prefer using npm over yarn, you can, but double check that you have the user space correctly configured  as in some systems this is not enabled by default ([see here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)).
 
 If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
-
-## TODOS
-* Add docs so we can use :h markmap.
