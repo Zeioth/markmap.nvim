@@ -68,6 +68,3 @@ $PATH"
 If you prefer using npm over yarn, you can, but double check that you have the user space correctly configured  as in some systems this is not enabled by default ([see here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)).
 
 If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
-
-## TODOS
-* Add docs so we can use :h markmap.
