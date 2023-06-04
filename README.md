@@ -70,4 +70,4 @@ If you prefer using npm over yarn, you can, but double check that you have the u
 If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
 
 ## TODOS
-* Add docs so we can use h markmap.
+* Add docs so we can use :h markmap.
