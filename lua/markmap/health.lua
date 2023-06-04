@@ -14,7 +14,7 @@ local health = {
 }
 
 function M.check()
-  health.start "markmap.nvim"
+  health.start "markmap"
 
   health.info(
     "Neovim Version: v"
