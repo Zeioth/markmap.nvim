@@ -72,4 +72,4 @@ If you prefer using npm over yarn, you can, but double check that you have the u
 If you are on windows, the process is the same. But the place to set PATH may change from one windows version to another.
 
 ## 🌟 Support the project
-Star this repository to increase the visibility of the project.
+If you want to help me, please star this repository to increase the visibility of the project.
