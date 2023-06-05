@@ -38,7 +38,7 @@ Markmap.nvim provide the next commands:
 | **:MarkmapWatch**   | Open markmap and watch for changes      |
 | **:MarkmapWatchStop** | The watch server ends automatically after a grace period, or when closing nvim. But it can also be stopped manually with this command. |
 
-Note that all commands will always save a `.html` file in `html_output`. Take adventage of this if you want to keep the graph.
+Note that all these commands will always generate a `.html` file in `html_output`. Take adventage of this if you want to keep the graph.
 
 ## Troubleshooting
 Run `:healthcheck markmap`. This command will tell you the depencencies you are missing. If the command do not exist, it means you are using an async package manager, so double check the package is beign loaded. These are the most common issues you will find:
