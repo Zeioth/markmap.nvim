@@ -9,7 +9,7 @@ M.setup = function(ctx)
   -- Setup options
   html_output = ctx.html_output
   hide_toolbar = ctx.hide_toolbar
-  grace_period = ctx.hide_toolbar
+  grace_period = ctx.grace_period
 
   -- Set default options
   if html_output == nil then
