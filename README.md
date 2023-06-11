@@ -74,6 +74,6 @@ If you are on windows, the process is the same. But the place to set PATH may ch
 ## 🌟 Support the project
 If you want to help me, please star this repository to increase the visibility of the project.
 
-## Stars over time
+## 🌟 Stars over time
 
 [![Stargazers over time](https://starchart.cc/Zeioth/markmap.nvim.svg)](https://starchart.cc/Zeioth/markmap.nvim)
