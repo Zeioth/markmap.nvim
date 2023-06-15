@@ -88,7 +88,7 @@ M.setup = function(ctx)
       -- Otherwise, use grace_period
       current_time = vim.loop.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
-        if job ~= nil then uv.process_kill(job, 9) end      -- kkill -9 jobs
+        if job ~= nil then uv.process_kill(job, 9) end      -- pkill -9 jobs
         last_execution = current_time                       -- update time
       end
     end,
