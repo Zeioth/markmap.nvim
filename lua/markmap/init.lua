@@ -1,5 +1,5 @@
 -- This plugin is a wrapper for markmap-cli
-local uv = vim.loop
+local uv = vim.uv or vim.loop
 local cmd = vim.api.nvim_create_user_command
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -57,9 +57,7 @@ M.setup = function(ctx)
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
-  cmd(
-    "MarkmapWatch",
-    function()
+  cmd("MarkmapWatch", function()
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then uv.process_kill(job, 9) end
