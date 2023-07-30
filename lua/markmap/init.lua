@@ -13,7 +13,7 @@ M.setup = function(ctx)
 
   -- Set default options
   if html_output == nil then
-    local is_windows = vim.loop.os_uname().sysname == "Windows"
+    local is_windows = uv.os_uname().sysname == "Windows"
     if is_windows then -- windows
       html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
     else               -- unix
@@ -72,7 +72,7 @@ M.setup = function(ctx)
 
   -- Autocmds --------------------------------------------------------------
   -- Kill jobs after a grace period
-  last_execution = vim.loop.now() -- timer for grace period
+  last_execution = uv.now() -- timer for grace period
   autocmd("CursorHold", {
     desc = "Kill all markmap jobs after a grace period",
     group = augroup("markmap_kill_after_grace_period", { clear = true }),
@@ -84,7 +84,7 @@ M.setup = function(ctx)
       end
 
       -- Otherwise, use grace_period
-      current_time = vim.loop.now()
+      current_time = uv.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
         if job ~= nil then uv.process_kill(job, 9) end      -- pkill -9 jobs
         last_execution = current_time                       -- update time
