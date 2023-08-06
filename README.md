@@ -67,10 +67,10 @@ $HOME/.npm-global/bin:\
 $HOME/.yarn/bin:\
 $HOME/.config/yarn/global/node_modules/.bin:\
 $HOME/.local/share/gem/ruby/3.0.0/bin:\
-$HOME/.cargo/env\
+$HOME/.cargo/env:\
 /root/.local/share/gem/ruby/3.0.0/bin:\
 /usr/local/bin:\
-/usr/share/nvm/init-nvm.sh \
+/usr/share/nvm/init-nvm.sh: \
 $PATH"
 ```
 If you prefer using npm over yarn, you can, but double check that you have the user space correctly configured  as in some systems this is not enabled by default ([see here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)).
