@@ -7,9 +7,9 @@ local M = {}
 
 M.setup = function(ctx)
   -- Setup options
-  html_output = ctx.html_output
-  hide_toolbar = ctx.hide_toolbar
-  grace_period = ctx.grace_period
+  local html_output = ctx.html_output
+  local hide_toolbar = ctx.hide_toolbar
+  local grace_period = ctx.grace_period
 
   -- Set default options
   if html_output == nil then
@@ -33,10 +33,10 @@ M.setup = function(ctx)
 
   -- Set a common job for all commands.
   -- This prevents more than one job running at the same time.
-  job = nil
+  local job = nil
 
   -- Set common arguments to avoid code repetition.
-  arguments = {}
+  local arguments = {}
   if html_output ~= "" then -- if html_output is "", don't pass the parameter
     table.insert(arguments, "-o")
     table.insert(arguments, html_output)
@@ -72,7 +72,7 @@ M.setup = function(ctx)
 
   -- Autocmds --------------------------------------------------------------
   -- Kill jobs after a grace period
-  last_execution = uv.now() -- timer for grace period
+  local last_execution = uv.now() -- timer for grace period
   autocmd("CursorHold", {
     desc = "Kill all markmap jobs after a grace period",
     group = augroup("markmap_kill_after_grace_period", { clear = true }),
@@ -84,7 +84,7 @@ M.setup = function(ctx)
       end
 
       -- Otherwise, use grace_period
-      current_time = uv.now()
+      local current_time = uv.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
         if job ~= nil then uv.process_kill(job, 9) end      -- pkill -9 jobs
         last_execution = current_time                       -- update time
