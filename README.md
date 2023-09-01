@@ -44,7 +44,7 @@ Markmap.nvim provide the next commands:
 | **:MarkmapWatch**   | Open markmap and watch for changes      |
 | **:MarkmapWatchStop** | The watch server ends automatically after a grace period, or when closing nvim. But it can also be stopped manually with this command. |
 
-Note that all these commands will always generate a `.html` file in `html_output`. Take adventage of this if you want to keep the graph.
+Note that all these commands will always generate a `.html` file in `html_output`. Take advantage of this if you want to keep the graph.
 
 ## Troubleshooting
 Run `:healthcheck markmap`. This command will tell you the depencencies you are missing. If the command do not exist, it means you are using an async package manager, so double check the package is beign loaded. These are the most common issues you will find:
@@ -67,10 +67,10 @@ $HOME/.npm-global/bin:\
 $HOME/.yarn/bin:\
 $HOME/.config/yarn/global/node_modules/.bin:\
 $HOME/.local/share/gem/ruby/3.0.0/bin:\
-$HOME/.cargo/env\
+$HOME/.cargo/env:\
 /root/.local/share/gem/ruby/3.0.0/bin:\
 /usr/local/bin:\
-/usr/share/nvm/init-nvm.sh \
+/usr/share/nvm/init-nvm.sh:\
 $PATH"
 ```
 If you prefer using npm over yarn, you can, but double check that you have the user space correctly configured  as in some systems this is not enabled by default ([see here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)).
