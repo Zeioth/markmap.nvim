@@ -37,20 +37,27 @@ M.setup = function(ctx)
 
   -- Set common arguments to avoid code repetition.
   local arguments = {}
-  if html_output ~= "" then -- if html_output is "", don't pass the parameter
-    table.insert(arguments, "-o")
-    table.insert(arguments, html_output)
+
+  -- Re-set the arguments every time we run markmap
+  local function reset_arguments()
+    arguments = {}
+    if html_output ~= "" then -- if html_output is "", don't pass the parameter
+      table.insert(arguments, "-o")
+      table.insert(arguments, html_output)
+    end
+    if hide_toolbar then table.insert(arguments, hide_toolbar) end
   end
-  if hide_toolbar then table.insert(arguments, hide_toolbar) end
 
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
+    reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end
     job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
+    reset_arguments()
     table.insert(arguments, "--no-open")           -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
@@ -58,6 +65,7 @@ M.setup = function(ctx)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
+      reset_arguments()
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then uv.process_kill(job, 9) end
