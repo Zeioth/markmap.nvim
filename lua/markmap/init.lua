@@ -14,9 +14,12 @@ M.setup = function(ctx)
   -- Set default options
   if html_output == nil then
     local is_windows = uv.os_uname().sysname == "Windows"
-    if is_windows then -- windows
+    local is_android = vim.fn.isdirectory('/system') == 1
+    if is_windows then     -- windows
       html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
-    else               -- unix
+    elseif is_android then -- android
+      html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
+    else                   -- unix
       html_output = "/tmp/markmap.html"
     end
   end
