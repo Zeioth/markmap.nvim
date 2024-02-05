@@ -96,7 +96,7 @@ They work on other file types, but results may vary.
                         A html will be generated on |html_output|.
 
                         Unlike |MarkmapOpen|, this command will update the
-                        markmap in real time when changes are made to
+                        markmap in real time when changes are written to
                         the markdown file.
 
                                                                  *:MarkmapStop*
