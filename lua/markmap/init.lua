@@ -6,6 +6,10 @@ local autocmd = vim.api.nvim_create_autocmd
 local M = {}
 
 M.setup = function(ctx)
+  -- Detect OS
+  local is_windows = uv.os_uname().sysname == "Windows"
+  local is_android = vim.fn.isdirectory('/system') == 1
+
   -- Setup options
   local html_output = ctx.html_output
   local hide_toolbar = ctx.hide_toolbar
@@ -13,8 +17,6 @@ M.setup = function(ctx)
 
   -- Set default options
   if html_output == nil then
-    local is_windows = uv.os_uname().sysname == "Windows"
-    local is_android = vim.fn.isdirectory('/system') == 1
     if is_windows then     -- windows
       html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
     elseif is_android then -- android
@@ -32,6 +34,12 @@ M.setup = function(ctx)
 
   if grace_period == nil then
     grace_period = 3600000 -- 60min
+  end
+
+  -- Windows extra fix
+  local run_markmap = "markmap"
+  if is_windows then
+    run_markmap = "markmap.cmd"
   end
 
   -- Set a common job for all commands.
@@ -56,7 +64,7 @@ M.setup = function(ctx)
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end
-    job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
+    job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
@@ -64,7 +72,7 @@ M.setup = function(ctx)
     table.insert(arguments, "--no-open")           -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
-    job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
+    job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
@@ -72,7 +80,7 @@ M.setup = function(ctx)
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then uv.process_kill(job, 9) end
-      job = uv.spawn("markmap", { args = arguments, detached = true }, nil)
+      job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
