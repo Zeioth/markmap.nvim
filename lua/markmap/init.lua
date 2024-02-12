@@ -36,7 +36,7 @@ M.setup = function(ctx)
     grace_period = 3600000 -- 60min
   end
 
-  -- Windows extra fix
+  -- Windows requires a different command.
   local run_markmap = "markmap"
   if is_windows then
     run_markmap = "markmap.cmd"
@@ -49,7 +49,7 @@ M.setup = function(ctx)
   -- Set common arguments to avoid code repetition.
   local arguments = {}
 
-  -- Re-set the arguments every time we run markmap
+  -- Re-set the arguments every time we run markmap.
   local function reset_arguments()
     arguments = {}
     if html_output ~= "" then -- if html_output is "", don't pass the parameter
