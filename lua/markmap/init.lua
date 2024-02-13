@@ -7,8 +7,8 @@ local M = {}
 
 M.setup = function(ctx)
   -- Detect OS
-  local is_windows = uv.os_uname().sysname == "Windows"
-  local is_android = vim.fn.isdirectory('/system') == 1
+  local is_windows = uv.os_uname().sysname == "Windows_NT"
+  local is_android = vim.fn.isdirectory "/system" == 1
 
   -- Setup options
   local html_output = ctx.html_output
@@ -17,8 +17,8 @@ M.setup = function(ctx)
 
   -- Set default options
   if html_output == nil then
-    if is_windows then     -- windows
-      html_output = "C:\\Users\\<username>\\AppData\\Local\\Temp\\markmap.html"
+    if is_windows then -- windows
+      html_output = uv.os_getenv "TEMP" .. "markmap.html"
     elseif is_android then -- android
       html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
     else                   -- unix
