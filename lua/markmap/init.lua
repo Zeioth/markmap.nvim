@@ -59,12 +59,21 @@ M.setup = function(ctx)
     if hide_toolbar then table.insert(arguments, hide_toolbar) end
   end
 
+  local function spawn_or(message)
+    if vim.bo.filetype == "markdown" then
+      return uv.spawn(run_markmap, { args = arguments }, nil)
+    else
+      vim.print(message)
+      return nil
+    end
+  end
+
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end
-    job = uv.spawn(run_markmap, { args = arguments }, nil)
+    job = spawn_or "Not in a markdown file"
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
@@ -72,7 +81,7 @@ M.setup = function(ctx)
     table.insert(arguments, "--no-open")           -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
-    job = uv.spawn(run_markmap, { args = arguments }, nil)
+    job = spawn_or "Not in a markdown file"
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
@@ -80,7 +89,7 @@ M.setup = function(ctx)
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then uv.process_kill(job, 9) end
-      job = uv.spawn(run_markmap, { args = arguments }, nil)
+      job = spawn_or "Not in a markdown file"
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
