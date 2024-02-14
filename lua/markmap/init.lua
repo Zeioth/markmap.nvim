@@ -64,7 +64,7 @@ M.setup = function(ctx)
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end
-    job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
+    job = uv.spawn(run_markmap, { args = arguments }, nil)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
@@ -72,7 +72,7 @@ M.setup = function(ctx)
     table.insert(arguments, "--no-open")           -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
     if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
-    job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
+    job = uv.spawn(run_markmap, { args = arguments }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
@@ -80,7 +80,7 @@ M.setup = function(ctx)
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then uv.process_kill(job, 9) end
-      job = uv.spawn(run_markmap, { args = arguments, detached = true }, nil)
+      job = uv.spawn(run_markmap, { args = arguments }, nil)
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
