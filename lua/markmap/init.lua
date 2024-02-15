@@ -63,7 +63,7 @@ M.setup = function(ctx)
   cmd("MarkmapOpen", function()
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.process_kill(job, 9) end
+    if job ~= nil then uv.process_kill(job) end
     job = uv.spawn(run_markmap, { args = arguments }, nil)
   end, { desc = "Show a mental map of the current file" })
 
@@ -71,7 +71,7 @@ M.setup = function(ctx)
     reset_arguments()
     table.insert(arguments, "--no-open")           -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
-    if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
+    if job ~= nil then uv.process_kill(job) end    -- kill jobs
     job = uv.spawn(run_markmap, { args = arguments }, nil)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
@@ -79,14 +79,14 @@ M.setup = function(ctx)
       reset_arguments()
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-      if job ~= nil then uv.process_kill(job, 9) end
+      if job ~= nil then uv.process_kill(job) end
       job = uv.spawn(run_markmap, { args = arguments }, nil)
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
 
   cmd("MarkmapWatchStop", function()
-    if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
+    if job ~= nil then uv.process_kill(job) end   -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
   -- Autocmds --------------------------------------------------------------
@@ -105,7 +105,7 @@ M.setup = function(ctx)
       -- Otherwise, use grace_period
       local current_time = uv.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
-        if job ~= nil then uv.process_kill(job, 9) end      -- pkill -9 jobs
+        if job ~= nil then uv.process_kill(job) end         -- pkill jobs
         last_execution = current_time                       -- update time
       end
     end,
@@ -116,7 +116,7 @@ M.setup = function(ctx)
     desc = "Kill all markmap jobs before closing nvim",
     group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
     callback = function()
-      if job ~= nil then uv.process_kill(job, 9) end -- kill -9 jobs
+      if job ~= nil then uv.process_kill(job) end          -- kill jobs
     end,
   })
 end
