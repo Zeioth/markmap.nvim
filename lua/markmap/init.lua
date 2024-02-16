@@ -21,7 +21,7 @@ M.setup = function(ctx)
       html_output = uv.os_getenv "TEMP" .. "\\" .. "markmap.html"
     elseif is_android then -- android
       html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
-    else                   -- unix
+    else -- unix
       html_output = "/tmp/markmap.html"
     end
   end
@@ -38,9 +38,7 @@ M.setup = function(ctx)
 
   -- Windows requires a different command.
   local run_markmap = "markmap"
-  if is_windows then
-    run_markmap = "markmap.cmd"
-  end
+  if is_windows then run_markmap = "markmap.cmd" end
 
   -- Set a common job for all commands.
   -- This prevents more than one job running at the same time.
@@ -63,30 +61,32 @@ M.setup = function(ctx)
   cmd("MarkmapOpen", function()
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-    if job ~= nil then uv.process_kill(job) end
-    job = uv.spawn(run_markmap, { args = arguments }, nil)
+    if job ~= nil then vim.fn.jobstop(job) end
+    job = vim.fn.jobstart { run_markmap, unpack(arguments) }
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     reset_arguments()
-    table.insert(arguments, "--no-open")           -- specific to this command
-    table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
-    if job ~= nil then uv.process_kill(job) end    -- kill jobs
-    job = uv.spawn(run_markmap, { args = arguments }, nil)
+    table.insert(arguments, "--no-open") -- specific to this command
+    table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+    if job ~= nil then vim.fn.jobstop(job) end -- kill jobs
+    job = vim.fn.jobstart { run_markmap, unpack(arguments) }
   end, { desc = "Save the HTML file without opening the mindmap" })
 
-  cmd("MarkmapWatch", function()
+  cmd(
+    "MarkmapWatch",
+    function()
       reset_arguments()
-      table.insert(arguments, "--watch")           -- spetific to this command
+      table.insert(arguments, "--watch") -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-      if job ~= nil then uv.process_kill(job) end
-      job = uv.spawn(run_markmap, { args = arguments }, nil)
+      if job ~= nil then vim.fn.jobstop(job) end
+      job = vim.fn.jobstart { run_markmap, unpack(arguments) }
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
 
   cmd("MarkmapWatchStop", function()
-    if job ~= nil then uv.process_kill(job) end   -- kill jobs
+    if job ~= nil then vim.fn.jobstop(job) end -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
   -- Autocmds --------------------------------------------------------------
@@ -105,8 +105,8 @@ M.setup = function(ctx)
       -- Otherwise, use grace_period
       local current_time = uv.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
-        if job ~= nil then uv.process_kill(job) end         -- pkill jobs
-        last_execution = current_time                       -- update time
+        if job ~= nil then vim.fn.jobstop(job) end -- pkill jobs
+        last_execution = current_time -- update time
       end
     end,
   })
@@ -116,7 +116,7 @@ M.setup = function(ctx)
     desc = "Kill all markmap jobs before closing nvim",
     group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
     callback = function()
-      if job ~= nil then uv.process_kill(job) end          -- kill jobs
+      if job ~= nil then vim.fn.jobstop(job) end -- kill jobs
     end,
   })
 end
