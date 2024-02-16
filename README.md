@@ -81,3 +81,6 @@ If you are on windows, the process is the same. But the place to set PATH may ch
 If you want to help me, please star this repository to increase the visibility of the project.
 
 [![Stargazers over time](https://starchart.cc/Zeioth/markmap.nvim.svg)](https://starchart.cc/Zeioth/markmap.nvim)
+
+## Roadmap
+* Once nvim releases lua 5.2 and `unpack` is deprecated, let's use `table.unpack` instead.
