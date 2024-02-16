@@ -1,5 +1,7 @@
 -- This plugin is a wrapper for markmap-cli
 local uv = vim.uv or vim.loop
+local jobstart = vim.fn.jobstart
+local jobstop = vim.fn.jobstop
 local cmd = vim.api.nvim_create_user_command
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -61,16 +63,16 @@ M.setup = function(ctx)
   cmd("MarkmapOpen", function()
     reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p")  -- current buffer path
-    if job ~= nil then vim.fn.jobstop(job) end
-    job = vim.fn.jobstart { run_markmap, unpack(arguments) }
+    if job ~= nil then jobstop(job) end
+    job = jobstart(run_markmap, { args = arguments })
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     reset_arguments()
     table.insert(arguments, "--no-open")          -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p")  -- current buffer path
-    if job ~= nil then vim.fn.jobstop(job) end    -- kill jobs
-    job = vim.fn.jobstart { run_markmap, unpack(arguments) }
+    if job ~= nil then jobstop(job) end    -- kill jobs
+    job = jobstart(run_markmap, { args = arguments })
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd(
@@ -79,14 +81,14 @@ M.setup = function(ctx)
       reset_arguments()
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
-      if job ~= nil then vim.fn.jobstop(job) end   -- kill jobs
-      job = vim.fn.jobstart { run_markmap, unpack(arguments) }
+      if job ~= nil then jobstop(job) end   -- kill jobs
+      job = jobstart(run_markmap, {args = arguments })
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
 
   cmd("MarkmapWatchStop", function()
-    if job ~= nil then vim.fn.jobstop(job) end     -- kill jobs
+    if job ~= nil then jobstop(job) end     -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
   -- Autocmds -----------------------------------------------------------------
@@ -105,7 +107,7 @@ M.setup = function(ctx)
       -- Otherwise, use grace_period
       local current_time = uv.now()
       if current_time - last_execution >= grace_period then -- if grace period exceeded
-        if job ~= nil then vim.fn.jobstop(job) end          -- pkill jobs
+        if job ~= nil then jobstop(job) end          -- pkill jobs
         last_execution = current_time                       -- update time
       end
     end,
@@ -116,7 +118,7 @@ M.setup = function(ctx)
     desc = "Kill all markmap jobs before closing nvim",
     group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
     callback = function()
-      if job ~= nil then vim.fn.jobstop(job) end            -- kill jobs
+      if job ~= nil then jobstop(job) end            -- kill jobs
     end,
   })
 end
