@@ -89,7 +89,7 @@ M.setup = function(ctx)
     if job ~= nil then vim.fn.jobstop(job) end     -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
-  -- Autocmds --------------------------------------------------------------
+  -- Autocmds -----------------------------------------------------------------
   -- Kill jobs after a grace period
   local last_execution = uv.now() -- timer for grace period
   autocmd("CursorHold", {
