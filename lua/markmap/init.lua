@@ -20,7 +20,7 @@ M.setup = function(ctx)
   -- Set default options
   if html_output == nil then
     if is_windows then
-      html_output = "TEMP" .. "\\" .. "markmap.html"
+      html_output = uv.os_getenv "TEMP" .. "\\" .. "markmap.html"
     elseif is_android then
       html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
     else -- unix
