@@ -7,20 +7,20 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local M = {}
 
-M.setup = function(ctx)
+M.setup = function(opts)
   -- Detect OS
   local is_windows = uv.os_uname().sysname == "Windows_NT"
-  local is_android = vim.fn.isdirectory "/system" == 1
+  local is_android = vim.fn.isdirectory("/system" == 1)
 
   -- Setup options
-  local html_output = ctx.html_output
-  local hide_toolbar = ctx.hide_toolbar
-  local grace_period = ctx.grace_period
+  local html_output = opts.html_output
+  local hide_toolbar = opts.hide_toolbar
+  local grace_period = opts.grace_period
 
   -- Set default options
   if html_output == nil then
     if is_windows then
-      html_output = uv.os_getenv "TEMP" .. "\\" .. "markmap.html"
+      html_output = uv.os_getenv("TEMP" .. "\\" .. "markmap.html")
     elseif is_android then
       html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
     else -- unix
@@ -62,16 +62,16 @@ M.setup = function(ctx)
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
     reset_arguments()
-    table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
+    table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then jobstop(job) end
     job = jobstart { run_markmap, unpack(arguments) }
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
     reset_arguments()
-    table.insert(arguments, "--no-open")           -- specific to this command
-    table.insert(arguments, vim.fn.expand "%:p")   -- current buffer path
-    if job ~= nil then jobstop(job) end            -- kill jobs
+    table.insert(arguments, "--no-open")         -- specific to this command
+    table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
+    if job ~= nil then jobstop(job) end          -- kill jobs
     job = jobstart { run_markmap, unpack(arguments) }
   end, { desc = "Save the HTML file without opening the mindmap" })
 
@@ -82,13 +82,13 @@ M.setup = function(ctx)
       table.insert(arguments, "--watch")           -- spetific to this command
       table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
       if job ~= nil then jobstop(job) end          -- kill jobs
-    job = jobstart { run_markmap, unpack(arguments) }
+      job = jobstart { run_markmap, unpack(arguments) }
     end,
     { desc = "Show a mental map of the current file and watch for changes" }
   )
 
   cmd("MarkmapWatchStop", function()
-    if job ~= nil then jobstop(job) end            -- kill jobs
+    if job ~= nil then jobstop(job) end -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
   -- Autocmds -----------------------------------------------------------------
@@ -118,7 +118,7 @@ M.setup = function(ctx)
     desc = "Kill all markmap jobs before closing nvim",
     group = augroup("markmap_kill_pre_exit_nvim", { clear = true }),
     callback = function()
-      if job ~= nil then jobstop(job) end                   -- kill jobs
+      if job ~= nil then jobstop(job) end -- kill jobs
     end,
   })
 end

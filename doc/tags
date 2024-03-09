@@ -1,0 +1,15 @@
+:MarkmapOpen	markmap.txt	/*:MarkmapOpen*
+:MarkmapSave	markmap.txt	/*:MarkmapSave*
+:MarkmapStop	markmap.txt	/*:MarkmapStop*
+:MarkmapWatch	markmap.txt	/*:MarkmapWatch*
+grace_period	markmap.txt	/*grace_period*
+hide_toolbar	markmap.txt	/*hide_toolbar*
+html_output	markmap.txt	/*html_output*
+makmap	markmap.txt	/*makmap*
+markmap-comamnds	markmap.txt	/*markmap-comamnds*
+markmap-faq	markmap.txt	/*markmap-faq*
+markmap-installation	markmap.txt	/*markmap-installation*
+markmap-options	markmap.txt	/*markmap-options*
+markmap-table-of-contents	markmap.txt	/*markmap-table-of-contents*
+markmap-usage	markmap.txt	/*markmap-usage*
+markmap.txt	markmap.txt	/*markmap.txt*
