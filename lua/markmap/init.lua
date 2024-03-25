@@ -10,7 +10,7 @@ local M = {}
 M.setup = function(opts)
   -- Detect OS
   local is_windows = uv.os_uname().sysname == "Windows_NT"
-  local is_android = vim.fn.isdirectory("/system" == 1)
+  local is_android = vim.fn.isdirectory("/system") == 1
 
   -- Setup options
   local html_output = opts.html_output
