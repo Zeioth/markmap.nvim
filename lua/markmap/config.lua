@@ -5,6 +5,9 @@ local uv = vim.uv or vim.loop
 local is_windows = uv.os_uname().sysname == "Windows_NT"
 local is_android = vim.fn.isdirectory("/system") == 1
 
+---Parse user options, or set the defaults
+---@param opts table A table with options to set.
+---@return opts table A table with the options. It is also exposed through vim.g.markmap_config
 M.set = function(opts)
   -- Setup options
   M.html_output = opts.html_output or nil

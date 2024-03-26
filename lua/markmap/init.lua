@@ -17,6 +17,7 @@ M.setup = function(opts)
 
   -- Setup commands -----------------------------------------------------------
   cmd("MarkmapOpen", function()
+    config = vim.g.markmap_config
     arguments = utils.reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then jobstop(job) end
@@ -24,6 +25,7 @@ M.setup = function(opts)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
+    config = vim.g.markmap_config
     arguments = utils.reset_arguments()
     table.insert(arguments, "--no-open")         -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
@@ -32,6 +34,7 @@ M.setup = function(opts)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
+    config = vim.g.markmap_config
     arguments = utils.reset_arguments()
     table.insert(arguments, "--watch")           -- spetific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
