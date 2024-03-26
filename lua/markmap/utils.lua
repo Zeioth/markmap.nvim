@@ -8,6 +8,9 @@ local is_windows = uv.os_uname().sysname == "Windows_NT"
 ---On windows, run it with {} so it doesn't spawn a shell.
 ---On unix, run it as string so it spawn a shell,
 ---so ENV is available, which is mandatory on termux.
+---
+---NOTE: In order to work on windows,
+---      the executables must be added to path in at windows level.
 ---@param cmd string command to run.
 ---@param arguments table arguments to pass to the cmd.
 ---@return number job pid of the job, so we can stop it later.
