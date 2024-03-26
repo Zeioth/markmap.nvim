@@ -1,10 +1,11 @@
 -- This plugin is a wrapper for markmap-cli
 local uv = vim.uv or vim.loop
+local utils = require("markmap.utils")
+local jobstart = utils.jobstart
 local jobstop = vim.fn.jobstop
 local cmd = vim.api.nvim_create_user_command
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local utils = require("markmap.utils")
 
 local M = {}
 
@@ -19,7 +20,7 @@ M.setup = function(opts)
     arguments = utils.reset_arguments()
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then jobstop(job) end
-    job = utils.jobstart(config.markmap_cmd, arguments)
+    job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Show a mental map of the current file" })
 
   cmd("MarkmapSave", function()
@@ -27,7 +28,7 @@ M.setup = function(opts)
     table.insert(arguments, "--no-open")         -- specific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then jobstop(job) end          -- kill jobs
-    job = utils.jobstart(config.markmap_cmd, arguments)
+    job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
@@ -35,7 +36,7 @@ M.setup = function(opts)
     table.insert(arguments, "--watch")           -- spetific to this command
     table.insert(arguments, vim.fn.expand "%:p") -- current buffer path
     if job ~= nil then jobstop(job) end          -- kill jobs
-    job = utils.jobstart(config.markmap_cmd, arguments)
+    job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Show a mental map of the current file and watch for changes" })
 
   cmd("MarkmapWatchStop", function()
