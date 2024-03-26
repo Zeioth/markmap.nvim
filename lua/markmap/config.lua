@@ -11,12 +11,12 @@ M.set = function(opts)
   -- Setup options
   M.html_output = opts.html_output or nil
   M.hide_toolbar = opts.hide_toolbar or false
-  M.grace_period = opts.grace_period or  3600000 -- 60min
+  M.grace_period = opts.grace_period or 3600000 -- 60min
 
   -- Set defaults: M.html_output
   if M.html_output == nil then
     if is_windows then
-      M.html_output = uv.os_getenv("TEMP" .. "\\" .. "markmap.html")
+      M.html_output = uv.os_getenv("TEMP") .. "\\" .. "markmap.html"
     elseif is_android then
       M.html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
     else -- unix
