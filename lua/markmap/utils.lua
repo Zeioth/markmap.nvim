@@ -9,9 +9,10 @@ local is_windows = uv.os_uname().sysname == "Windows_NT"
 ---On unix, run it as string so it spawn a shell,
 ---so ENV is available, which is mandatory on termux.
 ---@param cmd string command to run.
----@param arguments table arguments to pass.
+---@param arguments table|nil arguments to pass.
 ---@return number job pid of the job, so we can stop it later.
 M.jobstart = function(cmd, arguments)
+  if arguments == nil then arguments = {} end
   if is_windows then
     return vim.fn.jobstart({ cmd, unpack(arguments) })
   else
