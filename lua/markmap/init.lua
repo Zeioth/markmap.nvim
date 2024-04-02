@@ -1,6 +1,5 @@
 -- This plugin is a wrapper for markmap-cli
 local api = vim.api
-local uv = vim.uv or vim.loop
 local utils = require("markmap.utils")
 local jobstart = utils.jobstart
 local jobstop = vim.fn.jobstop
