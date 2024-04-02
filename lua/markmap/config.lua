@@ -1,8 +1,9 @@
 -- Config options to keep init clean.
 local M = {}
 
-local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
-local is_android = vim.fn.isdirectory('/data') == 1
+local uv = vim.uv or vim.loop
+local is_windows = uv.os_uname().sysname == "Windows_NT"
+local is_android = vim.fn.isdirectory("/data") == 1
 
 ---Parse user options, or set the defaults
 ---@param opts table A table with options to set.
