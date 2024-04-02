@@ -12,12 +12,13 @@ local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
 ---      the executables must be added to path in at windows level.
 ---@param cmd string command to run.
 ---@param arguments table arguments to pass to the cmd.
+---@param opts table vim.fn.jobstart options
 ---@return number job pid of the job, so we can stop it later.
-M.jobstart = function(cmd, arguments)
+M.jobstart = function(cmd, arguments, opts)
   if is_windows then
-    return vim.fn.jobstart({ cmd, unpack(arguments) })
+    return vim.fn.jobstart({ cmd, unpack(arguments) }, opts)
   else
-    return vim.fn.jobstart(cmd .. " " .. table.concat(arguments, " "))
+    return vim.fn.jobstart(cmd .. " " .. table.concat(arguments, " "), opts)
   end
 end
 
@@ -28,7 +29,7 @@ M.reset_arguments = function()
   local config = vim.g.markmap_config
 
   local arguments = {}
-  if config.html_output ~= "" then   -- if html_output is "", don't pass the parameter
+  if config.html_output ~= "" then -- if html_output is "", don't pass the parameter
     table.insert(arguments, "-o")
     table.insert(arguments, '"' .. config.html_output .. '"')
   end
