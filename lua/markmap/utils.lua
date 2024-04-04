@@ -16,9 +16,9 @@ local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
 ---@return number job pid of the job, so we can stop it later.
 M.jobstart = function(cmd, arguments, opts)
   if is_windows then
-    return vim.fn.jobstart({ cmd, unpack(arguments) }, opts)
+    return opts and vim.fn.jobstart({ cmd, unpack(arguments) }, opts) or vim.fn.jobstart({ cmd, unpack(arguments) })
   else
-    return vim.fn.jobstart(cmd .. " " .. table.concat(arguments, " "), opts)
+    return opts and vim.fn.jobstart(cmd .. " " .. table.concat(arguments, " "), opts) or vim.fn.jobstart(cmd .. " " .. table.concat(arguments, " "))
   end
 end
 
