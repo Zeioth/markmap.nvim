@@ -27,7 +27,8 @@ M.setup = function(opts)
   cmd("MarkmapSave", function()
     config = vim.g.markmap_config
     arguments = utils.reset_arguments()
-    table.insert(arguments, "--no-open")          -- specific to this command
+    arguments[2] = vim.fn.expand("%:p:r") .. ".html" -- by default save to open buf location
+    table.insert(arguments, "--no-open") -- specific to this command
     table.insert(arguments, vim.fn.expand("%:p")) -- current buffer path
     if job ~= nil then jobstop(job) end           -- kill jobs
     job = jobstart(config.markmap_cmd, arguments)
