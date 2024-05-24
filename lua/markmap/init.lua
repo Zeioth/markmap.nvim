@@ -1,5 +1,4 @@
 -- This plugin is a wrapper for markmap-cli
-local uv = vim.uv or vim.loop
 local utils = require("markmap.utils")
 local jobstart = utils.jobstart
 local jobstop = vim.fn.jobstop
@@ -48,7 +47,7 @@ M.setup = function(opts)
 
   -- Autocmds -----------------------------------------------------------------
   -- Kill jobs after a grace period
-  local last_execution = uv.now() -- timer for grace period
+  local last_execution = vim.uv.now() -- timer for grace period
   autocmd("CursorHold", {
     desc = "Kill all markmap jobs after a grace period",
     group = augroup("markmap_kill_after_grace_period", { clear = true }),
@@ -60,7 +59,7 @@ M.setup = function(opts)
       end
 
       -- Otherwise, use grace_period
-      local current_time = uv.now()
+      local current_time = vim.uv.now()
       if current_time - last_execution >= config.grace_period then -- if grace period exceeded
         if job ~= nil then jobstop(job) end                        -- pkill jobs
         last_execution = current_time                              -- update time

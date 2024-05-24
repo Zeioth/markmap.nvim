@@ -1,8 +1,7 @@
 -- Config options to keep init clean.
 local M = {}
 
-local uv = vim.uv or vim.loop
-local is_windows = uv.os_uname().sysname == "Windows_NT"
+local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
 local is_android = vim.fn.isdirectory('/data') == 1
 
 ---Parse user options, or set the defaults
@@ -16,7 +15,7 @@ M.set = function(opts)
   -- Set defaults: M.html_output
   if M.html_output == nil then
     if is_windows then
-      M.html_output = uv.os_getenv("TEMP") .. "\\" .. "markmap.html"
+      M.html_output = vim.uv.os_getenv("TEMP") .. "\\" .. "markmap.html"
     elseif is_android then
       M.html_output = "/data/data/com.termux/files/usr/tmp/markmap.html"
     else -- unix

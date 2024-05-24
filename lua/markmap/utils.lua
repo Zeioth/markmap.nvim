@@ -1,8 +1,7 @@
 -- General utils to keep init clean.
 local M = {}
 
-local uv = vim.uv or vim.loop
-local is_windows = uv.os_uname().sysname == "Windows_NT"
+local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
 
 ---Wrapper for jobstart.
 ---On windows, run it with {} so it doesn't spawn a shell.

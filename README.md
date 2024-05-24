@@ -52,9 +52,9 @@ Run `:healthcheck markmap`. This command will tell you the depencencies you are 
 * Run
 ```
 yarn global add markmap-cli
-```    
+```
 * Now try to run
-```    
+```
 markmap
 ```
 If the executable is not found, that means you need to add yarn to your PATH. This is normally done in your .profile, bashrc, or zshrc file like this:
@@ -81,6 +81,3 @@ If you are on windows, the process is the same. But the place to set PATH may ch
 If you want to help me, please star this repository to increase the visibility of the project.
 
 [![Stargazers over time](https://starchart.cc/Zeioth/markmap.nvim.svg)](https://starchart.cc/Zeioth/markmap.nvim)
-
-## Roadmap
-* Once nvim releases lua 5.2 and `unpack` is deprecated, let's use `table.unpack` instead.
