@@ -30,7 +30,7 @@ M.reset_arguments = function()
   local arguments = {}
   if config.html_output ~= "" then   -- if html_output is "", don't pass the parameter
     table.insert(arguments, "-o")
-    table.insert(arguments, config.html_output)
+    table.insert(arguments, '"' .. config.html_output .. '"')
   end
   if config.hide_toolbar then table.insert(arguments, config.hide_toolbar) end
   return arguments
