@@ -18,7 +18,8 @@ M.setup = function(opts)
   cmd("MarkmapOpen", function()
     config = vim.g.markmap_config
     arguments = utils.reset_arguments()
-    table.insert(arguments, vim.fn.expand("%:p")) -- current buffer path
+    local path = '"' .. vim.fn.expand("%:p") .. '"'  -- current buffer path
+    table.insert(arguments, path)
     if job ~= nil then jobstop(job) end
     job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Show a mental map of the current file" })
@@ -26,23 +27,25 @@ M.setup = function(opts)
   cmd("MarkmapSave", function()
     config = vim.g.markmap_config
     arguments = utils.reset_arguments()
-    table.insert(arguments, "--no-open")          -- specific to this command
-    table.insert(arguments, vim.fn.expand("%:p")) -- current buffer path
-    if job ~= nil then jobstop(job) end           -- kill jobs
+    local path = '"' .. vim.fn.expand("%:p") .. '"' -- current buffer path
+    table.insert(arguments, "--no-open")            -- specific to this command
+    table.insert(arguments, path)
+    if job ~= nil then jobstop(job) end             -- kill jobs
     job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Save the HTML file without opening the mindmap" })
 
   cmd("MarkmapWatch", function()
     config = vim.g.markmap_config
     arguments = utils.reset_arguments()
-    table.insert(arguments, "--watch")            -- spetific to this command
-    table.insert(arguments, vim.fn.expand("%:p")) -- current buffer path
-    if job ~= nil then jobstop(job) end           -- kill jobs
+    local path = '"' .. vim.fn.expand("%:p") .. '"' -- current buffer path
+    table.insert(arguments, "--watch")              -- spetific to this command
+    table.insert(arguments, path)
+    if job ~= nil then jobstop(job) end             -- kill jobs
     job = jobstart(config.markmap_cmd, arguments)
   end, { desc = "Show a mental map of the current file and watch for changes" })
 
   cmd("MarkmapWatchStop", function()
-    if job ~= nil then jobstop(job) end          -- kill jobs
+    if job ~= nil then jobstop(job) end             -- kill jobs
   end, { desc = "Manually stops markmap watch" })
 
   -- Autocmds -----------------------------------------------------------------
