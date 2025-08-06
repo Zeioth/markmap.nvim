@@ -9,7 +9,7 @@ local is_windows = vim.uv.os_uname().sysname == "Windows_NT"
 ---so ENV is available, which is mandatory on termux.
 ---
 ---NOTE: In order to work on windows,
----      the executables must be added to path in at windows level.
+---      the executables must be added to path at windows level.
 ---@param cmd string command to run.
 ---@param arguments table arguments to pass to the cmd.
 ---@return number job pid of the job, so we can stop it later.
