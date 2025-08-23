@@ -11,6 +11,7 @@ M.set = function(opts)
   M.html_output = opts.html_output or nil
   M.hide_toolbar = opts.hide_toolbar or false
   M.grace_period = opts.grace_period or 3600000 -- 60min
+  M.markmap_cmd = opts.markmap_cmd or nil
 
   -- Set defaults: M.html_output
   if M.html_output == nil then
@@ -31,10 +32,12 @@ M.set = function(opts)
   end
 
   -- Set defaults: M.markmap_cmd
-  if is_windows then
-    M.markmap_cmd = "markmap.cmd" -- windows requires this special command.
-  else
-    M.markmap_cmd = "markmap"
+  if M.markmap_cmd == nil then
+    if is_windows then
+      M.markmap_cmd = "markmap.cmd" -- windows requires this special command.
+    else
+      M.markmap_cmd = "markmap"
+    end
   end
 
   -- Expose config globally
